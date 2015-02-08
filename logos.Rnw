@@ -146,6 +146,9 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 }\label{fig:1}
 \end{figure*}
 
+\hh{Todo stuff: Include reference to seqLogo (bioconductor package by Oliver Bembom).
+Is there a better choice than ReadImages (which has been archived)?}
+
 \bibliographystyle{natbib}
 % argument is your BibTeX string definitions and bibliography database(s)
 \bibliography{references}
