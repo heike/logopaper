@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+
+*.Rproj
+
+*.tex
+
+*.bbl
+
+*.log
+
+*.pdf
+
+*.gz

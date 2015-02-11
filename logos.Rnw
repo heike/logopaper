@@ -17,6 +17,7 @@
 \usepackage{url}
 \usepackage[table]{xcolor}
 
+\newcommand{\hh}[1]{{\color{blue} #1}}
 \renewcommand\floatpagefraction{1}
 
 
@@ -107,16 +108,19 @@ Another change to the original design is that non-identified amino acids (marked
 \begin{figure*}
 \begin{subfigure}[b]{\linewidth}
 \caption{Sequence logos showing the amino acid usage in the adenylate kinase lid (AKL) domain across all organisms.}\label{fig:1a} 
-<<redesign, results='asis',  echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4>>=
+<<redesign, results='asis',  echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4, message=FALSE>>=
 # library(devtools)
 # install_github("heike/gglogo")
-suppressMessages(library(gglogo))
-suppressMessages(library(scales))
-suppressMessages(library(grid))
+library(gglogo)
+library(scales)
+library(grid)
+library(ggplot2)
+library(RColorBrewer)
+
 data(sequences)
 data(aacids)
+
 dm2 <- splitSequence(sequences, "peptide")
-library(RColorBrewer)
 cols <- c("grey80", brewer.pal(3,"RdYlBu"))
 
 dm3 <- calcInformation(dm2, pos="position", elems="element", k=21)
