@@ -9,8 +9,20 @@ data(aacids)
 
 function(input, output) {
     
+    values <- reactiveValues(seqs = list())
+    
+    observeEvent(input$addseq, {
+        values$seqs <<- list(peptide = c(unlist(values$seqs), input$sequence))
+    })
+    
+    output$sequences <- renderText({
+        return(paste(values$seqs, collapse = "\n"))
+    })
+    
     output$logoplot <- renderPlot({
-        dm2 <- splitSequence(sequences, "peptide")
+        if (length(values$seqs) == 0) return(NULL)
+        
+        dm2 <- splitSequence(as.data.frame(values$seqs), "peptide")
         cols <- c("grey80", brewer.pal(3,"RdYlBu"))
         
         dm3 <- calcInformation(dm2, pos="position", elems="element", k=21)
