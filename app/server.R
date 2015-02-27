@@ -11,12 +11,8 @@ function(input, output) {
     
     values <- reactiveValues(seqs = list())
     
-    observeEvent(input$addseq, {
-        values$seqs <<- list(peptide = c(unlist(values$seqs), input$sequence))
-    })
-    
-    output$sequences <- renderText({
-        return(paste(values$seqs, collapse = "\n"))
+    observeEvent(input$confirm, {
+        values$seqs <<- list(peptide = strsplit(input$sequence, split = ",")[[1]])
     })
     
     output$logoplot <- renderPlot({
