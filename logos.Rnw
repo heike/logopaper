@@ -17,7 +17,9 @@
 \usepackage{url}
 \usepackage[table]{xcolor}
 
-\newcommand{\hh}[1]{{\color{blue} #1}}
+%\definecolor{Blue}{rgb}{0,0,0.5}
+\newcommand{\hh}[1]{{\color{magenta} #1}}
+\newcommand{\eh}[1]{{\color{red} #1}}
 \renewcommand\floatpagefraction{1}
 
 
@@ -52,6 +54,18 @@ E-mail: helga.hofmann-sieber@hpi.uni-hamburg.de
 
 \begin{document}
 \maketitle
+
+\hh{
+Ok, so let's do a to-do list first:
+\begin{enumerate}
+\item We need a gentler intro to logo plots and a lit review of them, including the citations coming from this challenge, and the reference to  seqLogo (bioconductor package by \citet{seqLogo})
+\item discussion of the cognitive challenges, and our solutions
+\item a discussion of the website (including facetting options?)
+\item some option of coloring by difference? (this could be based on a comparison of  multinomial distributions)
+\end{enumerate}
+}
+
+
 {\sc Based} on data provided in form of amino acid sequences, we focused on a re-design of the logo plot that will allow to easily answer the following three questions: 
 \begin{enumerate} \itemsep-.05in
 \item[\bf (i)] {\it How well do the observed sequences conserve the overall pattern?} 
@@ -72,11 +86,11 @@ In the traditional plot, each amino acid is shown in each position by its corres
 
 \subsection*{Shortcomings of the traditional logo plot}
 %
-The {\bf color choice} for representing the letters of amino acids is related to water solubility and polarity (e.g. hydrophobic, non-polar amino acids are shown in red) but this is not explicitly stated in a legend. Further, the use of letters to represent amino acids results in shapes of different visual dominance; the letter `I' is much less visually pronounced than for example `W'.\\[-5pt]
+The {\bf color choice} for representing the letters of amino acids is related to water solubility and polarity (e.g. hydrophobic, non-polar amino acids are shown in red) but this is not explicitly stated in a legend. Further, the use of letters to represent amino acids results in shapes of different visual dominance; the letter `I' is much less visually pronounced than for example `W'.\\
 
-{\bf Non identified amino acids} are being ignored in the original plot -- it is of importance to keep track of at least the position  and the frequency of these occurrences, as it might indicate a problem with the sequencing.\\[-5pt]
+{\bf Non identified amino acids} are being ignored in the original plot -- it is of importance to keep track of at least the position  and the frequency of these occurrences, as it might indicate a problem with the sequencing.\\
 
-The plotting of {\bf sequences of subfamilies} in separate logo plots does not facilitate a comparison of them. Researchers are in particular interested in differences in the conservation of amino acids between subfamilies.\\[-5pt]
+The plotting of {\bf sequences of subfamilies} in separate logo plots does not facilitate a comparison of them. Researchers are in particular interested in differences in the conservation of amino acids between subfamilies.\\
 
 The {\bf number of sequences} in each of the subfamilies is not shown directly. This influences  the inherent variability. It is therefore important to keep track of these numbers to be able to assess how and whether the size of each subfamily affects conservation.
 %
@@ -87,17 +101,17 @@ The {\bf number of sequences} in each of the subfamilies is not shown directly. 
 The height of boxes and letters is still given by the contribution of the amino acids to the total information. 
 The width of boxes is adjusted for the number of sequences in each subfamily, if appropriate. In Figure~\ref{fig:1b} this difference is not immediately visible, as the class sizes are very similar, but in case of very different class sizes a rescaling of the width is extremely helpful.
 
-As information is strictly non-negative, we can make further use of the vertical axis by aligning the bottom of the box for the most frequently observed amino acid along the horizontal axis. This makes the box heights for the top sequence directly comparable.  It also aligns the boxes for the second most frequent amino acid, enabling comparisons of either one of the two highest contributions along a common scale \citep{cleveland:1984}. This reveals a previously unnoticed subgroup in the Gram-positive bacteria.  103 out of the 886 Gram-positive bacteria stabilize their  ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.\\[-5pt]
+As information is strictly non-negative, we can make further use of the vertical axis by aligning the bottom of the box for the most frequently observed amino acid along the horizontal axis. This makes the box heights for the top sequence directly comparable.  It also aligns the boxes for the second most frequent amino acid, enabling comparisons of either one of the two highest contributions along a common scale \citep{cleveland:1984}. This reveals a previously unnoticed subgroup in the Gram-positive bacteria.  103 out of the 886 Gram-positive bacteria stabilize their  ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.\\
 
 
 {\bf Color \& shade:}
-color hues are used to show two main properties of amino acids: polarity and electrical charging. Non-polar amino acids are shown in grey, polar amino acids are divided into positively charged (red), negatively charged (blue) and uncharged (yellow) amino acids. Opposite to the original plot color a legend is included in the graphic. This makes it easier for the reader to identify possible interactions between polar residues at first view.\\[-5pt]
+color hues are used to show two main properties of amino acids: polarity and electrical charging. Non-polar amino acids are shown in grey, polar amino acids are divided into positively charged (red), negatively charged (blue) and uncharged (yellow) amino acids. Opposite to the original plot color a legend is included in the graphic. This makes it easier for the reader to identify possible interactions between polar residues at first view.\\
 
 
 
 
 {\bf Non identified amino acids:}
-Another change to the original design is that non-identified amino acids (marked by a `.' in the  sequence) are kept, and shown in the visualization by a framed, but otherwise transparent box. The Shannon information calculated for the collective of non-identified amino acids should not be interpreted as actual information, as non-identified amino acids are not necessarily the same, but the fact, that amino acids are not identified in a position is valuable and should not be ignored. For example,  non-identified amino acids contribute the second largest contingent among the Gram-positive sequences in position 28, and might be an explanation of why these sequences are not conserved as well as  Gram-negative ones.\\[-5pt]
+Another change to the original design is that non-identified amino acids (marked by a `.' in the  sequence) are kept, and shown in the visualization by a framed, but otherwise transparent box. The Shannon information calculated for the collective of non-identified amino acids should not be interpreted as actual information, as non-identified amino acids are not necessarily the same, but the fact, that amino acids are not identified in a position is valuable and should not be ignored. For example,  non-identified amino acids contribute the second largest contingent among the Gram-positive sequences in position 28, and might be an explanation of why these sequences are not conserved as well as  Gram-negative ones.\\
 
 {\bf Juxtaposition of subfamilies:} In order to facilitate comparisons across subfamilies, boxes of amino acids from different families are positioned side-by-side as shown in figure~\ref{fig:1b} to emphasize differences between Gram-positive and Gram-negative sequences. In a further step (not shown) this can be used to show sub-classes or clusters of sequences within a subfamily, which would represent a logical next step of an analysis and allow for an evaluation of how often and in which positions amino acids deviate from the main sequence structure. 
 
@@ -150,8 +164,6 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 }\label{fig:1}
 \end{figure*}
 
-\hh{Todo stuff: Include reference to seqLogo (bioconductor package by Oliver Bembom).
-Is there a better choice than ReadImages (which has been archived)?}
 
 \bibliographystyle{natbib}
 % argument is your BibTeX string definitions and bibliography database(s)
