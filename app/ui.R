@@ -28,6 +28,27 @@ fluidPage(theme = shinytheme("united"),
             
             conditionalPanel(condition = "input.advanced == true",
                 h4("Advanced Configuration"),
+                
+                h5("Plot Colors"),
+                textInput("colgrp1", "Group 1", "AILMFPWV"),
+                textInput("name1", "Name 1", "Non-Polar"),
+                textInput("col1", "Color 1", "grey80"),
+                helpText("-----"),
+                
+                textInput("colgrp2", "Group 2", "RHK"),
+                textInput("name2", "Name 2", "Basic"),
+                textInput("col2", "Color 2", "#FC8D59"),
+                helpText("-----"),
+                
+                textInput("colgrp3", "Group 3", "NCQGSTY"),
+                textInput("name3", "Name 3", "Neutral"),
+                textInput("col3", "Color 3", "#FFFFBF"),
+                helpText("-----"),
+                
+                textInput("colgrp4", "Group 4", "DE"),
+                textInput("name4", "Name 4", "Acidic"),
+                textInput("col4", "Color 4", "#91BFDB"),
+                helpText("-----"),
                                 
                 h5("Plot Labels"),
                 textInput("title", "Plot Title", value = ""),
