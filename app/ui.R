@@ -12,10 +12,17 @@ fluidPage(theme = shinytheme("united"),
         sidebarPanel(
             h4("Sequence"),
             
-            helpText("Input a list of sequences, separated by commas"),
+            selectizeInput("mychoice", label = "Choose Input Method", choices = c("Type Sequence Data" = "type", "Upload Sequence Data" = "upload")),
             
-            tags$textarea(id="sequence", rows=3, cols=40, "RWTHLASGRT,RWLSLBSGRT,RWTHLSSGRT"),
-
+            conditionalPanel(condition = "input.mychoice == 'type'", 
+                helpText("Input a list of sequences, separated by commas"),
+                tags$textarea(id="sequence", rows=3, cols=40, "RWTHLASGRT,RWLSLBSGRT,RWTHLSSGRT")
+            ),
+            
+            conditionalPanel(condition = "input.mychoice == 'upload'", 
+                fileInput("data", "Upload Sequence Data")
+            ),
+            
             actionButton("confirm", "Build Logo Plot"),
             
             conditionalPanel(condition = "output.plotbuilt == true",

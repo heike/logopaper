@@ -15,6 +15,12 @@ function(input, output) {
         values$seqs <<- list(peptide = strsplit(input$sequence, split = ",")[[1]])
     })
     
+    ## The initial uploaded dataset
+    seqs.initial <- reactive({
+        if (is.null(input$data)) return(NULL)
+        else return(read.csv(input$data$datapath))
+    })
+    
     output$plotbuilt <- reactive({
         return(length(values$seqs) > 0)
     })
