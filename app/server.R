@@ -7,12 +7,34 @@ library(grid)
 data(sequences)
 data(aacids)
 
+parseSeqData <- function(seq_data) {
+    
+    indices <- grep(">", seq_data)
+    result.list <- lapply(indices, function(i) {
+        maxi <- indices[which(indices > i)[1]]
+        if (is.na(maxi)) maxi <- length(seq_data) + 1
+        vec <- (i + 1):(maxi - 1)
+        
+        line <- seq_data[i]
+        type <- gsub(">", "", line)
+        
+        pep <- paste(seq_data[vec], collapse = "")
+        
+        return(c(pep, type))
+    })
+    
+    result.df <- as.data.frame(do.call(rbind, result.list))
+    names(result.df) <- c("peptide", paste0("fac", 1:(ncol(result.df) - 1)))
+    
+    return(result.df)
+}
+
 function(input, output) {
     
-    values <- reactiveValues(seqs = list())
+    values <- reactiveValues(seqs = "")
     
     observeEvent(input$confirm, {
-        values$seqs <<- list(peptide = strsplit(input$sequence, split = ",")[[1]])
+        values$seqs <<- input$sequence
     })
     
     ## The initial uploaded dataset
@@ -36,10 +58,12 @@ function(input, output) {
     })
     
     myplot <- reactive({
-        if (length(values$seqs) == 0) return(NULL)
+        if (nchar(values$seqs) == 0) return(NULL)
         
         withProgress(message = "Building logo plot, please wait...", expr = {
-            dm2 <- splitSequence(as.data.frame(values$seqs), "peptide")
+            #dm2 <- splitSequence(as.data.frame(values$seqs), "peptide")
+            test <- parseSeqData(strsplit(values$seqs, split = "\n")[[1]])
+            dm2 <- splitSequence(test, "peptide")
             cols <- c(input$col1, input$col2, input$col3, input$col4)
             
             dm3 <- calcInformation(dm2, pos="position", elems="element", k=21)

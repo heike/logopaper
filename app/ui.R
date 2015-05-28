@@ -15,8 +15,8 @@ fluidPage(theme = shinytheme("united"),
             selectizeInput("mychoice", label = "Choose Input Method", choices = c("Type Sequence Data" = "type", "Upload Sequence Data" = "upload")),
             
             conditionalPanel(condition = "input.mychoice == 'type'", 
-                helpText("Input a list of sequences, separated by commas"),
-                tags$textarea(id="sequence", rows=3, cols=40, "RWTHLASGRT,RWLSLBSGRT,RWTHLSSGRT")
+                helpText("Input sequencing data"),
+                tags$textarea(id="sequence", rows=3, cols=40, "")
             ),
             
             conditionalPanel(condition = "input.mychoice == 'upload'", 
