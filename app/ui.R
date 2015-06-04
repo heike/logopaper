@@ -5,7 +5,7 @@ library(shinythemes)
 ## Choice of color scheme ala weblogo
 
 fluidPage(theme = shinytheme("united"),
-    
+
     titlePanel("GGLogo Prototype"),
     
     sidebarLayout(
@@ -71,9 +71,11 @@ fluidPage(theme = shinytheme("united"),
         ),
         
         mainPanel(
+            
             #textOutput("sequences"),
             hr(),
-            plotOutput("logoplot")
+            plotOutput("logoplot"),
+            sliderInput("zoom", "Sequence Region", min = 1, max = 231, value = c(1, 231), width = "100%")
         )
     )
 )
