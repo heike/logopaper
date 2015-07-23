@@ -123,6 +123,7 @@ Another change to the original design is that non-identified amino acids (marked
 \begin{subfigure}[b]{\linewidth}
 \caption{Sequence logos showing the amino acid usage in the adenylate kinase lid (AKL) domain across all organisms.}\label{fig:1a} 
 <<redesign, results='asis',  echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4, message=FALSE>>=
+## To install gglogo
 # library(devtools)
 # install_github("heike/gglogo")
 library(gglogo)
