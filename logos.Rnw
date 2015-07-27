@@ -167,12 +167,12 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 
 \section{Online tools}
 
-RWebLogo R Code, wrapper for python code (BSD licence)
+RWebLogo R Code, wrapper for python code (BSD licence) \cite{rweblogo}
 WebLogo Python Code Python Code (BSD license, somewhat difficult to use)
 WebLogo 3.0 \cite{weblogo}
 
 Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
-MoRAine (Online application with integrated binding site re-annotation)
+MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
 GENIO (Online)
 PWM-based logo (Online application for motif PWM-based models)
 LogoBar (Java application)
