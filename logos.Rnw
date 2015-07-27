@@ -165,6 +165,21 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 }\label{fig:1}
 \end{figure*}
 
+\section{Online tools}
+
+RWebLogo R Code, wrapper for python code (BSD licence)
+WebLogo Python Code Python Code (BSD license, somewhat difficult to use)
+WebLogo 3.0 (Online)
+Seq2Logo (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
+MoRAine (Online application with integrated binding site re-annotation)
+GENIO (Online)
+PWM-based logo (Online application for motif PWM-based models)
+LogoBar (Java application)
+CorreLogo An online server for 3D sequence logos of RNA and DNA alignments
+seqlogo C function to generate DNA sequence logos
+[1] MS-Word AddOn Ribbon that allows generation of consensus logos
+RILogo program and web server for creating logos for two interacting RNAs
+Skylign Online tool for creating logos representing both sequence alignments and profile hidden Markov models
 
 \bibliographystyle{natbib}
 % argument is your BibTeX string definitions and bibliography database(s)
