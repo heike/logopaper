@@ -34,14 +34,12 @@
 \title{Online logo plots\vspace{-.1in}}
 
 %% indicate IEEE Member or Student Member in form indicated below
-\author{Eric Hare and Heike Hofmann and Helga Hofmann-Sieber\vspace{-.5in}}
+\author{Eric Hare and Heike Hofmann and Helga Hofmann-Sieber}
 \authorfooter{
 %% insert punctuation at end of each item
 %\item
-\vspace{-.1in}\hspace{-.2in}
 Eric Hare is  graduate student of Statistics at Iowa State University, E-mail: erichare@iastate.edu.
 %\item
-
 \hspace{-.2in}
  Heike Hofmann is  Professor of Statistics and faculty member in the Human Computer Interaction program at Iowa State University, E-mail: hofmann@iastate.edu.
 %\item
