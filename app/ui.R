@@ -20,7 +20,7 @@ fluidPage(theme = shinytheme("united"),
             ),
             
             conditionalPanel(condition = "input.mychoice == 'upload'", 
-                fileInput("data", "Upload Sequence Data")
+                fileInput("data", "Upload Sequence Data (FASTA)")
             ),
             
             actionButton("confirm", "Build Logo Plot"),
@@ -35,6 +35,9 @@ fluidPage(theme = shinytheme("united"),
             
             conditionalPanel(condition = "input.advanced == true",
                 h4("Advanced Configuration"),
+                
+                h5("Plot Options"),
+                selectizeInput("facetvar", label = "Facet Variable", choices = c("None", "Factor")),
                 
                 h5("Plot Colors"),
                 textInput("colgrp1", "Group 1", "AILMFPWV"),

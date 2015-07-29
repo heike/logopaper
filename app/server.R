@@ -3,38 +3,18 @@ library(gglogo)
 library(RColorBrewer)
 library(ggplot2)
 library(grid)
+library(plyr)
 library(dplyr)
+library(seqinr)
 
 data(sequences)
 data(aacids)
 
-parseSeqData <- function(seq_data) {
-    
-    indices <- grep(">", seq_data)
-    result.list <- lapply(indices, function(i) {
-        maxi <- indices[which(indices > i)[1]]
-        if (is.na(maxi)) maxi <- length(seq_data) + 1
-        vec <- (i + 1):(maxi - 1)
-        
-        line <- seq_data[i]
-        type <- gsub(">", "", line)
-        
-        pep <- paste(seq_data[vec], collapse = "")
-        
-        return(c(pep, type))
-    })
-    
-    result.df <- as.data.frame(do.call(rbind, result.list))
-    names(result.df) <- c("peptide", paste0("fac", 1:(ncol(result.df) - 1)))
-    
-    return(result.df)
-}
+# Hook into amino acid package to select option for polarity
 
 function(input, output, session) {
     
     values <- reactiveValues(seqs = "")
-    
-    
     
     observeEvent(input$confirm, {
         values$seqs <<- input$sequence
@@ -43,7 +23,7 @@ function(input, output, session) {
     ## The initial uploaded dataset
     seqs.initial <- reactive({
         if (is.null(input$data)) return(NULL)
-        else return(read.csv(input$data$datapath))
+        else return(read.fasta(input$data$datapath))
     })
     
     output$plotbuilt <- reactive({
@@ -61,12 +41,16 @@ function(input, output, session) {
     })
     
     my.seqdata <- reactive({
-        if (nchar(values$seqs) == 0) return(NULL)
+        if (nchar(values$seqs) == 0 && is.null(seqs.initial())) return(NULL)
         
-        test <- parseSeqData(strsplit(values$seqs, split = "\n")[[1]])
-        updateSliderInput(session, "zoom", max = nchar(as.character(test$peptide[1])), value = c(1, nchar(as.character(test$peptide[1]))))
+        test <- seqs.initial()
+        my.df <- ldply(test, function(my.seq) {
+            paste(toupper(as.character(my.seq)), collapse = "")
+        })
+        names(my.df) <- c("factor", "peptide")
+        updateSliderInput(session, "zoom", max = nchar(as.character(my.df$peptide[1])), value = c(1, nchar(as.character(my.df$peptide[1]))))
         
-        return(test)
+        return(my.df)
     })
     
     myplot <- reactive({
@@ -79,7 +63,9 @@ function(input, output, session) {
             dm2 <- splitSequence(test, "peptide")
             cols <- c(input$col1, input$col2, input$col3, input$col4)
             
-            dm3 <- calcInformation(dm2, pos="position", elems="element", k=21)
+            my.trt <- if (input$facetvar == "Factor") "factor" else NULL
+            
+            dm3 <- calcInformation(dm2, trt = my.trt, pos="position", elems="element", k=21)
             dm3b <- merge(dm3, aacids, by.x="element", by.y="AA", all.x=T)
             dm3bb <- merge(dm3b, mydf(), by.x = "element", by.y = "AA", all.x = T)
             
@@ -89,14 +75,14 @@ function(input, output, session) {
                 geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + 
                 geom_logo() + 
                 scale_fill_manual("Polarity", values=cols, labels = c(input$name1, input$name2, input$name3, input$name4)) +  
-                theme_bw() + theme(legend.position="bottom") + 
+                geom_hline(yintercept=0, colour="white", size=0.5) + 
+                geom_hline(yintercept=0, colour="grey30", size=0.125) + 
+                theme_bw() + theme(legend.position="bottom", plot.margin=unit(c(0,0,0,0), "cm")) + 
                 xlab(input$xlab) +
                 ylab(input$ylab) + 
                 ggtitle(input$title) +
-                theme(plot.margin=unit(c(0,0,0,0), "cm")) + 
-                geom_hline(yintercept=0, colour="white", size=0.5) + 
-                geom_hline(yintercept=0, colour="grey30", size=0.125) + 
-                scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
+                scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4)) +
+                if (input$facetvar == "Factor") facet_grid(factor ~ .)
         })
     })
     
