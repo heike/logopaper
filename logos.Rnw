@@ -174,13 +174,13 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 \item WebLogo 3.0 \cite{weblogo}
 \item Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
 \item MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
-\item GENIO (Online)
-\item PWM-based logo (Online application for motif PWM-based models)
-\item LogoBar (Java application)
-\item CorreLogo An online server for 3D sequence logos of RNA and DNA alignments
-\item seqlogo C function to generate DNA sequence logos
-\item MS-Word AddOn Ribbon that allows generation of consensus logos
-\item RILogo program and web server for creating logos for two interacting RNAs
+\item GENIO (Online, http://www.biogenio.com/logo/ - no other apparent reference)
+\item PWM-based logo (Online application for motif PWM-based models) - XXX can't find an appropriate reference
+\item LogoBar \citep{logobar} (Java application)
+\item CorreLogo \citep{correlogo} An online server for 3D sequence logos of RNA and DNA alignments
+\item seqlogo \citep{seqlogo} C function to generate DNA sequence logos (the reference is for the R package. I am not sure that there are C functions)
+\item MS-Word AddOn Ribbon that allows generation of consensus logos - can't find a reference besides to http://sourceforge.net/projects/bioword/?source=navbar
+\item RILogo program and web server \citep{rilogo} for creating logos for two interacting RNAs
 \item Skylign Online tool  \citep{skylign} for creating logos representing both sequence alignments and profile hidden Markov models
 \end{itemize}
 \bibliographystyle{natbib}
