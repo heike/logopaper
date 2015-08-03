@@ -168,22 +168,21 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 \end{figure*}
 
 \section{Online tools}
-
-RWebLogo R Code, wrapper for python code (BSD licence) \cite{rweblogo}
-WebLogo Python Code Python Code (BSD license, somewhat difficult to use)
-WebLogo 3.0 \cite{weblogo}
-
-Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
-MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
-GENIO (Online)
-PWM-based logo (Online application for motif PWM-based models)
-LogoBar (Java application)
-CorreLogo An online server for 3D sequence logos of RNA and DNA alignments
-seqlogo C function to generate DNA sequence logos
-[1] MS-Word AddOn Ribbon that allows generation of consensus logos
-RILogo program and web server for creating logos for two interacting RNAs
-Skylign Online tool for creating logos representing both sequence alignments and profile hidden Markov models
-
+\begin{itemize}
+\item RWebLogo R Code, wrapper for python code (BSD licence) \cite{rweblogo}
+\item WebLogo Python Code Python Code (BSD license, somewhat difficult to use)
+\item WebLogo 3.0 \cite{weblogo}
+\item Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
+\item MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
+\item GENIO (Online)
+\item PWM-based logo (Online application for motif PWM-based models)
+\item LogoBar (Java application)
+\item CorreLogo An online server for 3D sequence logos of RNA and DNA alignments
+\item seqlogo C function to generate DNA sequence logos
+\item MS-Word AddOn Ribbon that allows generation of consensus logos
+\item RILogo program and web server for creating logos for two interacting RNAs
+\item Skylign Online tool  \citep{skylign} for creating logos representing both sequence alignments and profile hidden Markov models
+\end{itemize}
 \bibliographystyle{natbib}
 % argument is your BibTeX string definitions and bibliography database(s)
 \bibliography{references}
