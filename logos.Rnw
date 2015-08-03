@@ -56,7 +56,7 @@ E-mail: helga.hofmann-sieber@hpi.uni-hamburg.de
 \hh{
 Ok, so let's do a to-do list first:
 \begin{enumerate}
-\item We need a gentler intro to logo plots and a lit review of them, including the citations coming from the biovis re-design challenge, and the reference to  seqLogo (bioconductor package by \citet{seqLogo})
+\item We need a gentler intro to logo plots and a lit review of them, including the citations coming from the biovis re-design challenge, and the reference to  seqLogo (bioconductor package by \citet{seqlogo})
 \item discussion of the cognitive challenges, and our solutions
 \item a discussion of the website (including facetting options?)
 \item some option of coloring by difference? (this could be based on a comparison of  multinomial distributions)
@@ -68,18 +68,22 @@ Ok, so let's do a to-do list first:
 
 \subsection{The traditional logo plot} 
 
-In a traditional logo sequence plot \citep{logo}, the position of an amino acid in the sequence is plotted on the horizontal axis, while on the vertical axis the amount of preserved information is shown. To measure preservation, Shannon information is used. Shannon information \citep{shannon} is an entropy measure given in bits, that describes the amount of mixture in each position. 
+In a traditional logo sequence plot \citep{logo}, the position of an amino acid in the sequence is plotted on the horizontal axis, while on the vertical axis the amount of preserved information is shown. To measure preservation, Shannon information~\citep{shannon} is used. Shannon information  is an entropy measure given in bits, that describes the amount of mixture in each position. 
 Formally, information $I$  in position $p$ is defined as
 \[
 I(p) = \log_2(21) + \sum_{aa} f_{aa} \log_2(f_{aa}),
 \]
-where $f_{aa}$ is the relative frequency with which amino acid $aa$ is observed at the position.
-For 21 amino acids, the maximal information is $-\log_2 (1/21) = 4.39$ bits, which is reached, if only a single amino acid is observed in the position, while perfect diversity (i.e. all 21 amino acids are observed with the same frequency) results in an information of $0$ bits. 
+where $f_{aa}$ is the relative frequency with which amino acid $aa$ is observed at  position $p$.
+For 21 amino acids, the maximal information is $-\log_2 (1/21) = 4.39$ bits, which is reached, if only a single amino acid is observed in the position, while perfect diversity, where all 21 amino acids are observed with the same frequency, results in an information of $0$ bits. 
 In the traditional plot, each amino acid is shown in each position by its corresponding letter with its height scaled to reflect the contribution to the position's total information. 
+
+\hh{Here'd be a good place to include a traditional logo plot.}
 
 \subsection{Shortcomings of the traditional logo plot}
 %
-The {\bf color choice} for representing the letters of amino acids is related to water solubility and polarity (e.g. hydrophobic, non-polar amino acids are shown in red) but this is not explicitly stated in a legend. Further, the use of letters to represent amino acids results in shapes of different visual dominance; the letter `I' is much less visually pronounced than for example `W'.\\
+The {\bf color choice} for representing the letters of amino acids is related to water solubility and polarity (e.g.\ hydrophobic, non-polar amino acids are shown in red) but this is not explicitly stated in a legend. Further, the use of letters to represent amino acids results in shapes of different visual dominance; the letter `I' is much less visually pronounced than for example `W'.\\
+
+\hh{This has also the potential of leading to ambiguity in the representation: e.g.\~using the standard Helvetica representation, the letter F over a T is not (easily) distinguishable from a letter E over an I.}
 
 {\bf Non identified amino acids} are being ignored in the original plot -- it is of importance to keep track of at least the position  and the frequency of these occurrences, as it might indicate a problem with the sequencing.\\
 
@@ -174,14 +178,14 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 \item WebLogo 3.0 \cite{weblogo}
 \item Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
 \item MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
-\item GENIO (Online, http://www.biogenio.com/logo/ - no other apparent reference)
+\item GENIO (Online, \url{http://www.biogenio.com/logo/} - no other apparent reference)
 \item PWM-based logo (Online application for motif PWM-based models) - XXX can't find an appropriate reference
-\item LogoBar \citep{logobar} (Java application)
-\item CorreLogo \citep{correlogo} An online server for 3D sequence logos of RNA and DNA alignments
-\item seqlogo \citep{seqlogo} C function to generate DNA sequence logos (the reference is for the R package. I am not sure that there are C functions)
+\item LogoBar \cite{logobar} (Java application)
+\item CorreLogo \cite{correlogo} An online server for 3D sequence logos of RNA and DNA alignments
+\item seqLogo \cite{seqlogo} C function to generate DNA sequence logos (the reference is for the R package. I am not sure that there are C functions)
 \item MS-Word AddOn Ribbon that allows generation of consensus logos - can't find a reference besides to http://sourceforge.net/projects/bioword/?source=navbar
-\item RILogo program and web server \citep{rilogo} for creating logos for two interacting RNAs
-\item Skylign Online tool  \citep{skylign} for creating logos representing both sequence alignments and profile hidden Markov models
+\item RILogo program and web server \cite{rilogo} for creating logos for two interacting RNAs
+\item Skylign Online tool  \cite{skylign} for creating logos representing both sequence alignments and profile hidden Markov models
 \end{itemize}
 \bibliographystyle{natbib}
 % argument is your BibTeX string definitions and bibliography database(s)
