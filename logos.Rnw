@@ -93,7 +93,7 @@ The {\bf number of sequences} in each of the subfamilies is not shown directly. 
 %
 \subsection{Aspects of the redesign}
 
-\hh{We will highlight aspects of the re-design using data made available as part of the BioVis 2013 re-design challenge (see  \url{http://www.biovis.net/year/2013/info/redesign-contest})}. The data consists of 1809 protein sequences of length 36 that are either Gram-negative (923 sequences) or  Gram-positive (886 sequences).
+\hh{We will highlight aspects of the re-design using data made available as part of the BioVis 2013 re-design challenge (see  \url{http://www.biovis.net/year/2013/info/redesign-contest})}. The data consists of 1809 protein sequences of length 36 that are either Gram-negative (923 sequences) or  Gram-positive (886 sequences). Figure~\ref{fig:1} shows logo plots featuring this data using the re-design discussed in this section.
 
  We focused on a re-design of the logo plot that will allow to easily answer the following three questions: 
 \begin{enumerate} %\itemsep-.05in
@@ -103,7 +103,7 @@ The {\bf number of sequences} in each of the subfamilies is not shown directly. 
 \end{enumerate}
 % non identified amino acids
 \subsubsection{Putting the letters in a box}
-{\bf Boxed-in letters:} the visually most dominant change to the display is the addition of boxes framing each letter. This gives each amino acid visually the same weight, independent of the shape of its corresponding letter. We decided to keep the letters themselves since they incorporate valuable and immediately recognizable information in the display.
+The visually most dominant change to the display is the addition of boxes framing each letter. This gives each amino acid visually the same weight, independent of the shape of its corresponding letter. We decided to keep the letters themselves since they incorporate valuable and immediately recognizable information in the display.
 % Construction of the plot
 The height of boxes and letters is still given by the contribution of the amino acids to the total information. 
 The width of boxes is adjusted for the number of sequences in each subfamily, if appropriate. In Figure~\ref{fig:1b} this difference is not immediately visible, as the class sizes are very similar, but in case of very different class sizes a rescaling of the width is extremely helpful.
@@ -112,7 +112,7 @@ As information is strictly non-negative, we can make further use of the vertical
 
 
 \subsubsection{Color \& Shade}
-Color hues are used to show two main properties of amino acids: polarity and electrical charging. Non-polar amino acids are shown in grey, polar amino acids are divided into positively charged (red), negatively charged (blue) and uncharged (yellow) amino acids. Opposite to the original plot color a legend is included in the graphic. This makes it easier for the reader to identify possible interactions between polar residues at first view.
+Color hues are used to show two main properties of amino acids: polarity and electrical charging. Non-polar amino acids are shown in grey, polar amino acids are divided into positively charged (red), negatively charged (blue) and uncharged (yellow) amino acids. In contrast to the original plot a legend is included in the graphic. This makes it easier for the reader to identify possible interactions between polar residues at first view.
 
 
 
