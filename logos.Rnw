@@ -97,9 +97,9 @@ The {\bf number of sequences} in each of the subfamilies is not shown directly. 
 
  We focused on a re-design of the logo plot that will allow to easily answer the following three questions: 
 \begin{enumerate} %\itemsep-.05in
-\item[\bf (i)] {\it How well do the observed sequences conserve the overall pattern? (And what is that pattern?)} 
-\item[\bf (ii)] {\it  What are differences in the conservation of the main pattern  between different types of treatment or strains.  For this particular data set: what are the differences between Gram-positive and Gram-negative sequences?} 
-\item[\bf (iii)] {\it What are the important positions and amino acids between the different treatments or strains, here: which amino acids are important for Gram-positive sequences, which for Gram-negative?}
+\item[\bf (i)] {\it How well do the observed sequences conserve the overall pattern?} 
+\item[\bf (ii)] {\it  What are differences in the conservation of the main pattern  between different types of treatment or strains?}  For this particular data set: what are the differences between Gram-positive and Gram-negative sequences?
+\item[\bf (iii)] {\it What are the important positions and amino acids between the different treatments or strains?} Here, this translates to the question of which amino acids are important for Gram-positive sequences, which for Gram-negative.
 \end{enumerate}
 % non identified amino acids
 \subsubsection{Putting the letters in a box}
