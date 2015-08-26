@@ -78,6 +78,8 @@ In the traditional plot, each amino acid is shown in each position by its corres
 
 \hh{Here'd be a good place to include a traditional logo plot.}
 
+\hh{The purpose of our paper is two-fold:  (1) we introduce a design overhaul of the logo plots that allow all of the comparisons of the current design, but adhere to better conventions and therefore lead users to a greater amount of detail (XXX urgh, needs some re-working), and (2) we present a webservice featuring logo plots in the new design, that allows easy access to experts in the field without any installation hassle.  }
+
 \subsection{Shortcomings of the traditional logo plot}
 %
 The {\bf color choice} for representing the letters of amino acids is related to water solubility and polarity (e.g.\ hydrophobic, non-polar amino acids are shown in red) but this is not explicitly stated in a legend. Further, the use of letters to represent amino acids results in shapes of different visual dominance; the letter `I' is much less visually pronounced than for example `W'.\\
@@ -90,7 +92,26 @@ The plotting of {\bf sequences of subfamilies} in separate logo plots does not f
 
 The {\bf number of sequences} in each of the subfamilies is not shown directly. This influences  the inherent variability. It is therefore important to keep track of these numbers to be able to assess how and whether the size of each subfamily affects conservation.
 %
-\subsection{Aspects of the redesign}
+\subsubsection{Relevant Literature}
+\hh{This needs to be worked into a paragraph:}
+
+(Online) tools for logo plot creation:
+\begin{itemize}
+\item RWebLogo R Code, wrapper for python code (BSD licence) \cite{rweblogo}
+\item WebLogo Python Code Python Code (BSD license, somewhat difficult to use)
+\item WebLogo 3.0 \cite{weblogo}
+\item Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
+\item MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
+\item GENIO (Online, \url{http://www.biogenio.com/logo/} - no other apparent reference)
+\item PWM-based logo (Online application for motif PWM-based models) - XXX can't find an appropriate reference
+\item LogoBar \cite{logobar} (Java application)
+\item CorreLogo \cite{correlogo} An online server for 3D sequence logos of RNA and DNA alignments
+\item seqLogo \cite{seqlogo} C function to generate DNA sequence logos (the reference is for the R package. I am not sure that there are C functions)
+\item MS-Word AddOn Ribbon that allows generation of consensus logos - can't find a reference besides to http://sourceforge.net/projects/bioword/?source=navbar
+\item RILogo program and web server \cite{rilogo} for creating logos for two interacting RNAs
+\item Skylign Online tool  \cite{skylign} for creating logos representing both sequence alignments and profile hidden Markov models
+\end{itemize}
+\section{Aspects of the redesign}
 
 \hh{We will highlight aspects of the re-design using data made available as part of the BioVis 2013 re-design challenge (see  \url{http://www.biovis.net/year/2013/info/redesign-contest})}. The data consists of 1809 protein sequences of length 36 that are either Gram-negative (923 sequences) or  Gram-positive (886 sequences). Figure~\ref{fig:1} shows logo plots featuring this data using the re-design discussed in this section.
 
@@ -186,22 +207,7 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 }\label{fig:1}
 \end{figure*}
 
-\section{Online tools}
-\begin{itemize}
-\item RWebLogo R Code, wrapper for python code (BSD licence) \cite{rweblogo}
-\item WebLogo Python Code Python Code (BSD license, somewhat difficult to use)
-\item WebLogo 3.0 \cite{weblogo}
-\item Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
-\item MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
-\item GENIO (Online, \url{http://www.biogenio.com/logo/} - no other apparent reference)
-\item PWM-based logo (Online application for motif PWM-based models) - XXX can't find an appropriate reference
-\item LogoBar \cite{logobar} (Java application)
-\item CorreLogo \cite{correlogo} An online server for 3D sequence logos of RNA and DNA alignments
-\item seqLogo \cite{seqlogo} C function to generate DNA sequence logos (the reference is for the R package. I am not sure that there are C functions)
-\item MS-Word AddOn Ribbon that allows generation of consensus logos - can't find a reference besides to http://sourceforge.net/projects/bioword/?source=navbar
-\item RILogo program and web server \cite{rilogo} for creating logos for two interacting RNAs
-\item Skylign Online tool  \cite{skylign} for creating logos representing both sequence alignments and profile hidden Markov models
-\end{itemize}
+
 \bibliographystyle{natbib}
 % argument is your BibTeX string definitions and bibliography database(s)
 \bibliography{references}
