@@ -121,10 +121,10 @@ Another change to the original design is that non-identified amino acids (marked
 \subsubsection{Covariates in logos: Juxtaposition of subfamilies}
 In order to facilitate comparisons across subfamilies, boxes of amino acids from different families are positioned side-by-side as shown in figure~\ref{fig:1b} to emphasize differences between Gram-positive and Gram-negative sequences. In a further step (not shown) this can be used to show sub-classes or clusters of sequences within a subfamily, which would represent a logical next step of an analysis and allow for an evaluation of how often and in which positions amino acids deviate from the main sequence structure. 
 
-\subsection{Our Implementation}
-Our re-design is implemented as a Shiny-based web application, using the R statistical software. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot will be displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left.
+\section{Our Implementation}
+Our re-design is implemented as a Shiny-based web application \cite{shiny}, using the R statistical software \cite{R}. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot will be displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left.
 
-\hh{Each one of the items on the list should become a subsubsection with a screenshot zoomed into the corresponding part of the discussion.}
+\hh{Each one of the items on the list should become a subsections with a screenshot zoomed into the corresponding part of the discussion.}
 Several advanced options are available after clicking ``Show Advanced Configuration":
 
 \begin{itemize}
