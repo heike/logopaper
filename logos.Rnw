@@ -124,14 +124,20 @@ In order to facilitate comparisons across subfamilies, boxes of amino acids from
 \subsection{Our Implementation}
 Our re-design is implemented as a Shiny-based web application, using the R statistical software. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot will be displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left.
 
+\hh{Each one of the items on the list should become a subsubsection with a screenshot zoomed into the corresponding part of the discussion.}
 Several advanced options are available after clicking ``Show Advanced Configuration":
 
 \begin{itemize}
     \item A facetting variable can be selected, which will show multiple logo plots based on the metadata contained in the FASTA file.
+    \hh{here, we need to discuss what facetting is - and how it is possible to encode a facetting variable in a FASTA file. }
     \item The plot groups can be defined. The name of the group, and the color of the amino acids for that group in the logo plut can be selected.
+    \hh{plot groups is the code internal name, right? what the user sees is the color, so just flip the order of the description and start with color for different amino acids based on different ways of grouping them - can we already link to the amino acid database? If not, let's include that in the conclusions under future work. }
+    
     \item A plot title, x axis label, and y axis label can be provided.
-    \item The image format for downloading the image can be selected as either png, jpg, or pdf.
-    \item The DPI (dots per inch) of the image can be defined.
+    \hh{these are all options of directly manipulating the resulting logoplot in the browser. the header of this section should be something like that.}
+    
+    \item \hh{`Saving the result' ? } The image format for downloading the image can be selected as either png, jpg, or pdf. 
+    \item The DPI (dots per inch) of the image can be defined. \hh{this should be included as an option in the last item}
 \end{itemize}
 
 \begin{figure*}
