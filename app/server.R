@@ -70,7 +70,10 @@ function(input, output, session) {
             dm3b <- merge(dm3, aacids, by.x="element", by.y="AA", all.x=T)
             dm3bb <- merge(dm3b, mydf(), by.x = "element", by.y = "AA", all.x = T)
             
+            #dm3bb$facet_group <- cut(as.numeric(dm3bb$position), seq(0, max(as.numeric(dm3bb$position)) + 29, by = 30), labels = FALSE)
+            
             ggplot(dm3bb, aes(x=position, y=bits, group=element, label=element, fill=Color), alpha=0.8) + 
+                #facet_grid(facet_group~., scales = "free_x") + 
                 geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + 
                 geom_logo() + 
                 scale_fill_manual("Polarity", values=cols, labels = c(input$name1, input$name2, input$name3, input$name4)) +  
