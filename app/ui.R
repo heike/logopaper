@@ -1,9 +1,6 @@
 library(shiny)
 library(shinythemes)
 
-## Legend with letters, color, name
-## Choice of color scheme ala weblogo
-
 fluidPage(theme = shinytheme("cerulean"),
 
     titlePanel("GGLogo Prototype"),
@@ -74,9 +71,6 @@ fluidPage(theme = shinytheme("cerulean"),
         ),
         
         mainPanel(
-            
-            #textOutput("sequences"),
-            hr(),
             plotOutput("logoplot"),
             sliderInput("zoom", "Sequence Region", min = 1, max = 231, value = c(1, 30), width = "100%", dragRange = TRUE, animate = TRUE)
         )
