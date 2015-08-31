@@ -40,16 +40,28 @@ function(input, output, session) {
         rbind(mydf1, mydf2, mydf3, mydf4)
     })
     
-    my.seqdata <- reactive({
+    my.df <- reactive({
         if (nchar(values$seqs) == 0 && is.null(seqs.initial())) return(NULL)
         
         test <- seqs.initial()
-        my.df <- ldply(test, function(my.seq) {
+        mydf <- ldply(test, function(my.seq) {
             paste(toupper(as.character(my.seq)), collapse = "")
         })
-        names(my.df) <- c("factor", "peptide")
-        updateSliderInput(session, "zoom", max = nchar(as.character(my.df$peptide[1])), value = c(1, nchar(as.character(my.df$peptide[1]))))
+        names(mydf) <- c("factor", "peptide")
         
+        return(mydf)
+    })
+    
+    observe({
+        if (!is.null(my.df())) {
+            my.df <- my.df()
+            updateSliderInput(session, "zoom", max = nchar(as.character(my.df$peptide[1])), value = c(1, min(30, nchar(as.character(my.df$peptide[1])))))
+        }
+    })
+    
+    my.seqdata <- reactive({
+        if (is.null(my.df())) return(NULL)
+        my.df <- my.df()
         my.df$peptide <- sapply(strsplit(my.df$peptide, ""), function(x){paste(x[input$zoom[1]:input$zoom[2]], collapse = "")})
         
         return(my.df)
