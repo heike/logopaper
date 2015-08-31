@@ -50,6 +50,8 @@ function(input, output, session) {
         names(my.df) <- c("factor", "peptide")
         updateSliderInput(session, "zoom", max = nchar(as.character(my.df$peptide[1])), value = c(1, nchar(as.character(my.df$peptide[1]))))
         
+        my.df$peptide <- sapply(strsplit(my.df$peptide, ""), function(x){paste(x[input$zoom[1]:input$zoom[2]], collapse = "")})
+        
         return(my.df)
     })
     
@@ -57,9 +59,8 @@ function(input, output, session) {
         if (is.null(my.seqdata())) return(NULL)
         
         withProgress(message = "Building logo plot, please wait...", expr = {
-            #dm2 <- splitSequence(as.data.frame(values$seqs), "peptide")
             test <- my.seqdata()
-
+            
             dm2 <- splitSequence(test, "peptide")
             cols <- c(input$col1, input$col2, input$col3, input$col4)
             
@@ -69,9 +70,7 @@ function(input, output, session) {
             dm3b <- merge(dm3, aacids, by.x="element", by.y="AA", all.x=T)
             dm3bb <- merge(dm3b, mydf(), by.x = "element", by.y = "AA", all.x = T)
             
-            dm3bbb <- filter(dm3bb, as.numeric(position) %in% input$zoom[1]:input$zoom[2])
-            
-            ggplot(dm3bbb, aes(x=position, y=bits, group=element, label=element, fill=Color), alpha=0.8) + 
+            ggplot(dm3bb, aes(x=position, y=bits, group=element, label=element, fill=Color), alpha=0.8) + 
                 geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + 
                 geom_logo() + 
                 scale_fill_manual("Polarity", values=cols, labels = c(input$name1, input$name2, input$name3, input$name4)) +  

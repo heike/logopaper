@@ -4,7 +4,7 @@ library(shinythemes)
 ## Legend with letters, color, name
 ## Choice of color scheme ala weblogo
 
-fluidPage(theme = shinytheme("united"),
+fluidPage(theme = shinytheme("cerulean"),
 
     titlePanel("GGLogo Prototype"),
     
@@ -12,7 +12,7 @@ fluidPage(theme = shinytheme("united"),
         sidebarPanel(
             h4("Sequence"),
             
-            selectizeInput("mychoice", label = "Choose Input Method", choices = c("Type Sequence Data" = "type", "Upload Sequence Data" = "upload")),
+            selectizeInput("mychoice", label = "Choose Input Method", choices = c("Upload Sequence Data" = "upload", "Type Sequence Data" = "type")),
             
             conditionalPanel(condition = "input.mychoice == 'type'", 
                 helpText("Input sequencing data"),
@@ -23,7 +23,7 @@ fluidPage(theme = shinytheme("united"),
                 fileInput("data", "Upload Sequence Data (FASTA)")
             ),
             
-            actionButton("confirm", "Build Logo Plot"),
+            #actionButton("confirm", "Build Logo Plot"),
             
             conditionalPanel(condition = "output.plotbuilt == true",
                 downloadButton("download", "Download Logo Plot")
