@@ -27,7 +27,7 @@ function(input, output, session) {
     })
     
     output$plotbuilt <- reactive({
-        return(length(values$seqs) > 0)
+        return(nrow(my.seqdata()) > 0)
     })
     outputOptions(output, 'plotbuilt', suspendWhenHidden=FALSE)
     
@@ -84,19 +84,21 @@ function(input, output, session) {
             
             #dm3bb$facet_group <- cut(as.numeric(dm3bb$position), seq(0, max(as.numeric(dm3bb$position)) + 29, by = 30), labels = FALSE)
             
-            ggplot(dm3bb, aes(x=position, y=bits, group=element, label=element, fill=Color), alpha=0.8) + 
-                #facet_grid(facet_group~., scales = "free_x") + 
+            dm3bb$x_var <- if (input$facetvar == "Factor") dm3bb$factor else dm3bb$position
+            my_text <- element_text(angle = ifelse(input$facetvar == "Factor", 90, 0), vjust = ifelse(input$facetvar == "Factor", 0.5, 1))
+            
+            ggplot(dm3bb, aes(x = x_var, y = bits, group = element, label = element, fill = Color), alpha = 0.8) + 
                 geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + 
                 geom_logo() + 
                 scale_fill_manual("Polarity", values=cols, labels = c(input$name1, input$name2, input$name3, input$name4)) +  
                 geom_hline(yintercept=0, colour="white", size=0.5) + 
                 geom_hline(yintercept=0, colour="grey30", size=0.125) + 
-                theme_bw() + theme(legend.position="bottom", plot.margin=unit(c(0,0,0,0), "cm")) + 
+                theme_bw() + theme(legend.position="bottom", plot.margin=unit(c(0,0,0,0), "cm"), axis.text.x = my_text) + 
                 xlab(input$xlab) +
                 ylab(input$ylab) + 
                 ggtitle(input$title) +
                 scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4)) +
-                if (input$facetvar == "Factor") facet_grid(factor ~ .)
+                if (input$facetvar == "Factor") facet_wrap(~position)
         })
     })
     
