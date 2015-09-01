@@ -81,6 +81,10 @@ function(input, output, session) {
             dm3 <- calcInformation(dm2, trt = my.trt, pos="position", elems="element", k=21)
             dm3b <- merge(dm3, aacids, by.x="element", by.y="AA", all.x=T)
             dm3bb <- merge(dm3b, mydf(), by.x = "element", by.y = "AA", all.x = T)
+
+            dm3bb$position <- as.numeric(as.character(dm3bb$position))
+            dm3bb$position <- dm3bb$position + input$zoom[1] - 1
+            dm3bb$position <- factor(dm3bb$position, levels = sort(dm3bb$position))
             
             #dm3bb$facet_group <- cut(as.numeric(dm3bb$position), seq(0, max(as.numeric(dm3bb$position)) + 29, by = 30), labels = FALSE)
             
