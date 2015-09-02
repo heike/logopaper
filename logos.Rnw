@@ -16,6 +16,7 @@
 %\usepackage{knitr}
 \usepackage{url}
 \usepackage[table]{xcolor}
+\usepackage{float}
 
 %\definecolor{Blue}{rgb}{0,0,0.5}
 \newcommand{\hh}[1]{{\color{magenta} #1}}
@@ -158,7 +159,14 @@ In the FASTA file encoding, a line of metadata beginning with the `$>$` symbol p
 ----------VH-----------------LTAEEKSLVSGLWG
 \end{verbatim}
 
-In this example, the first line is parsed and the string ``Dog" is returned as the value for the factor variable. The application will then group all other instances of Dog sequences, and allow easy comparison with the other values present in the file.
+In this example, the first line is parsed and the string ``Dog" is returned as the value for the factor variable. The application will then group all other instances of Dog sequences, and allow easy comparison with the other values present in the file. This example is shown in Figure \ref{fig:facetting}.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=\linewidth]{images/facetting}
+  \caption{Example of using our application to facet by a particular factor.}
+  \label{fig:facetting}
+\end{figure}
 
 \begin{itemize}
     \item The plot groups can be defined. The name of the group, and the color of the amino acids for that group in the logo plut can be selected.
