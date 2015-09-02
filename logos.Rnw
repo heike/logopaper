@@ -148,9 +148,19 @@ Our re-design is implemented as a Shiny-based web application \cite{shiny}, usin
 \hh{Each one of the items on the list should become a subsections with a screenshot zoomed into the corresponding part of the discussion.}
 Several advanced options are available after clicking ``Show Advanced Configuration":
 
+\subsection{Facetting}
+We often wish to compare the frequency of amino acids in each position at different levels of some factor, or grouping variable. For instance, if an experiment contained two replications, we can observe the consistency across replications by comparing each replication side by side for each position in the sequence. This technique is called \textbf{facetting} and our implementation provides a way to do this.
+
+In the FASTA file encoding, a line of metadata beginning with the `$>$` symbol precedes each sequence. Our application will automatically parse the first piece of metadata up to the first space encountered on this line, and treat it as a factor for which one can facet by. For instance, an example of FASTA encoding might be the following:
+
+\begin{verbatim}
+>Dog HEMOGLOBIN BETA CHAIN - DOG AND COYOTE
+----------VH-----------------LTAEEKSLVSGLWG
+\end{verbatim}
+
+In this example, the first line is parsed and the string ``Dog" is returned as the value for the factor variable. The application will then group all other instances of Dog sequences, and allow easy comparison with the other values present in the file.
+
 \begin{itemize}
-    \item A facetting variable can be selected, which will show multiple logo plots based on the metadata contained in the FASTA file.
-    \hh{here, we need to discuss what facetting is - and how it is possible to encode a facetting variable in a FASTA file. }
     \item The plot groups can be defined. The name of the group, and the color of the amino acids for that group in the logo plut can be selected.
     \hh{plot groups is the code internal name, right? what the user sees is the color, so just flip the order of the description and start with color for different amino acids based on different ways of grouping them - can we already link to the amino acid database? If not, let's include that in the conclusions under future work. }
     
