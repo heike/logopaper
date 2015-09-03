@@ -64,7 +64,35 @@ Ok, so let's do a to-do list first:
 }
 
 \section{Introduction}
+<<example-setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
+df1 <- read.csv("data/frequencies.csv")[1:13]
+df2 <- read.csv("data/frequencies-2nd.csv")[1:13]
+df1$run <- 1
+df2$run <- 2
+df1 <- df1[-grep("N", df1$X),]
+df2 <- df2[-grep("N", df2$X),]
 
+library(reshape2)
+frm1 <- melt(df1, id.vars=c("X", "run"))
+frm2 <- melt(df2, id.vars=c("X", "run"))
+frm <- rbind(frm1, frm2)
+frm$X <- as.character(frm$X)
+frm$variable <- gsub("_S._","_", as.character(frm$variable))
+frm$variable <- gsub("[hi]","", as.character(frm$variable))
+frm$variable <- gsub("2_GCT","plasmid", as.character(frm$variable))
+frm$variable <- gsub("plasmd","plasmid", as.character(frm$variable))
+library(ggplot2)
+library(RColorBrewer)
+suppressMessages(library(grid))
+
+library(dplyr)
+ord <- frm %>% group_by(variable) %>% summarize(
+  means=sum(value[which(X=="AACCCACTGCTTAAGCCTCAATAAAGCTTGCCTT")])/sum(value))
+ord <- ord[order(ord$means),]
+frm$variable <- factor(frm$variable, levels=ord$variable)
+
+
+@
 
 \subsection{The traditional logo plot} 
 
@@ -230,6 +258,26 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 % argument is your BibTeX string definitions and bibliography database(s)
 \bibliography{references}
 
+<<hiv-examples, echo=FALSE>>=
+suppressMessages(library(gglogo))
+suppressMessages(library(RColorBrewer))
+suppressMessages(library(grid))
+
+cols <- brewer.pal(10,"Paired")[c(1,2,7,8)]
+ 
+frm2 <- subset(frm, value < 50000)
+
+dm2 <- splitSequence(frm2, "X")
+dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
+dm4$element <- factor(dm4$element, levels = c("A", "T", "C", "G"))
+dm4$patientrun <- with(dm4, paste(variable, run, sep="."))
+ggplot(data=dm4, aes(x=patientrun, y=info, group=element, 
+                     label=element, fill=element), alpha=0.8) + 
+  geom_logo() + scale_fill_manual(values=cols) + 
+  facet_wrap(~position, ncol=6) + theme_bw() + 
+  theme(axis.text.x=element_text(angle=-90), 
+        legend.position="none") + xlab("")
+@
 
 \end{document}
 
