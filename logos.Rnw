@@ -123,7 +123,7 @@ The {\bf number of sequences} in each of the subfamilies is not shown directly. 
 \item[\bf (iii)] {\it What are the important positions and amino acids between the different treatments or strains?} Here, this translates to the question of which amino acids are important for Gram-positive sequences, which for Gram-negative.
 \end{enumerate}
 % non identified amino acids
-\subsubsection{Putting the letters in a box}
+\subsection{Putting the letters in a box}
 The visually most dominant change to the display is the addition of boxes framing each letter. This gives each amino acid visually the same weight, independent of the shape of its corresponding letter. We decided to keep the letters themselves since they incorporate valuable and immediately recognizable information in the display.
 % Construction of the plot
 The height of boxes and letters is still given by the contribution of the amino acids to the total information. 
@@ -132,15 +132,15 @@ The width of boxes is adjusted for the number of sequences in each subfamily, if
 As information is strictly non-negative, we can make further use of the vertical axis by aligning the bottom of the box for the most frequently observed amino acid along the horizontal axis. This makes the box heights for the top sequence directly comparable.  It also aligns the boxes for the second most frequent amino acid, enabling comparisons of either one of the two highest contributions along a common scale \citep{cleveland:1984}. This reveals a previously unnoticed subgroup in the Gram-positive bacteria.  103 out of the 886 Gram-positive bacteria stabilize their  ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
 
 
-\subsubsection{Color \& Shade}
+\subsection{Color \& Shade}
 Color hues are used to show two main properties of amino acids: polarity and electrical charging. Non-polar amino acids are shown in grey, polar amino acids are divided into positively charged (red), negatively charged (blue) and uncharged (yellow) amino acids. In contrast to the original plot a legend is included in the graphic. This makes it easier for the reader to identify possible interactions between polar residues at first view.
 
 
 
-\subsubsection{Treatment of non-identified amino acids}
+\subsection{Treatment of non-identified amino acids}
 Another change to the original design is that non-identified amino acids (marked by a `.' in the  sequence) are kept, and shown in the visualization by a framed, but otherwise transparent box. The Shannon information calculated for the collective of non-identified amino acids should not be interpreted as actual information, as non-identified amino acids are not necessarily the same, but the fact, that amino acids are not identified in a position is valuable and should not be ignored. For example,  non-identified amino acids contribute the second largest contingent among the Gram-positive sequences in position 28, and might be an explanation of why these sequences are not conserved as well as  Gram-negative ones.
 
-\subsubsection{Covariates in logos: Juxtaposition of subfamilies}
+\subsection{Covariates in logos: Juxtaposition of subfamilies}
 In order to facilitate comparisons across subfamilies, boxes of amino acids from different families are positioned side-by-side as shown in figure~\ref{fig:1b} to emphasize differences between Gram-positive and Gram-negative sequences. In a further step (not shown) this can be used to show sub-classes or clusters of sequences within a subfamily, which would represent a logical next step of an analysis and allow for an evaluation of how often and in which positions amino acids deviate from the main sequence structure. 
 
 \section{Our Implementation}
