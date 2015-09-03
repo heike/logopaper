@@ -258,7 +258,7 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 % argument is your BibTeX string definitions and bibliography database(s)
 \bibliography{references}
 
-<<hiv-examples, echo=FALSE>>=
+<<hiv-examples, echo=FALSE, fig.width=6, fig.height=12, out.width='\\columnwidth'>>=
 suppressMessages(library(gglogo))
 suppressMessages(library(RColorBrewer))
 suppressMessages(library(grid))
@@ -274,7 +274,7 @@ dm4$patientrun <- with(dm4, paste(variable, run, sep="."))
 ggplot(data=dm4, aes(x=patientrun, y=info, group=element, 
                      label=element, fill=element), alpha=0.8) + 
   geom_logo() + scale_fill_manual(values=cols) + 
-  facet_wrap(~position, ncol=6) + theme_bw() + 
+  facet_wrap(~position, ncol=4) + theme_bw() + 
   theme(axis.text.x=element_text(angle=-90), 
         legend.position="none") + xlab("")
 @
