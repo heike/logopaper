@@ -209,6 +209,12 @@ In this example, the first line is parsed and the string ``Dog" is returned as t
     \item The DPI (dots per inch) of the image can be defined. \hh{this should be included as an option in the last item}
 \end{itemize}
 
+\section{Examples}
+\subsection{Re-design of Biovis}
+Figure~\ref{fig:1} shows the re-design of the logo sequence from figure~\ref{original logo}.
+\hh{XXX needs a bit more}
+The ADK lid domain structure is universally conserved, but is stabilized in the Gram-negatives by a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29 (and several other residues in some organisms), while the Gram-positives are stabilized by a bound metal ion, tetrahedrally coordinated by four Cysteine residues at 4, 7, 24 and 27. A percentage of 11.6\% ($\pm 2.2$) Gram-positive bacteria stabilizes their ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
+The identities of several other positions (eg 5, 8, 30, 32) are differentially constrained in each subfamily as well, apparently due to steric requirements of the stabilizing residues.
 \begin{figure*}
 \begin{subfigure}[b]{\linewidth}
 \caption{Sequence logos showing the amino acid usage in the adenylate kinase lid (AKL) domain across all organisms.}\label{fig:1a} 
@@ -250,19 +256,14 @@ ggplot(dm5b, aes(x=class, y=bits, group=element, label=element, fill= Polarity),
 @
 \end{subfigure} 
 \caption{ 
-The ADK lid domain structure is universally conserved, but is stabilized in the Gram-negatives by a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29 (and several other residues in some organisms), while the Gram-positives are stabilized by a bound metal ion, tetrahedrally coordinated by four Cysteine residues at 4, 7, 24 and 27. A percentage of 11.6\% ($\pm 2.2$) Gram-positive bacteria stabilizes their ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
-The identities of several other positions (eg 5, 8, 30, 32) are differentially constrained in each subfamily as well, apparently due to steric requirements of the stabilizing residues.
+\hh{XXX caption}
 }\label{fig:1}
 \end{figure*}
 
+\subsection{Viral Preservation}
 
-\bibliographystyle{natbib}
-% argument is your BibTeX string definitions and bibliography database(s)
-\bibliography{references}
 
-\hh{XXX one problem with the logo plot in general are the negative numbers on the $y$-axis. below 0. Is there a way to make those numbers positive? Neither one of the information measures can be negative. }
-
-\hh{XXX specific problem with the HIV example: patients should be just letters. }
+\begin{figure}
 <<hiv-examples, echo=FALSE, fig.width=6, fig.height=12, out.width='\\columnwidth'>>=
 suppressMessages(library(gglogo))
 suppressMessages(library(RColorBrewer))
@@ -275,16 +276,26 @@ frm2 <- subset(frm, value < 50000)
 dm2 <- splitSequence(frm2, "X")
 dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
 dm4$element <- factor(dm4$element, levels = c("A", "T", "C", "G"))
-dm4$patientrun <- with(dm4, paste(c(LETTERS[1:12], "plasmid")[as.numeric(variable)], run, sep="."))
+dm4$patientrun <- with(dm4, paste(c(LETTERS[1:11], "plasmid")[as.numeric(variable)], run, sep="."))
 dm4$poslabel <- paste("pos:", dm4$position, sep=" ")
 ggplot(data=dm4, aes(x=patientrun, y=info, group=element, 
                      label=element, fill=element), alpha=0.8) + 
   geom_logo() + scale_fill_manual(values=cols) + 
   facet_wrap(~poslabel, ncol=4) + theme_bw() + 
-  theme(axis.text.x=element_text(angle=-90), 
+  theme(axis.text.x=element_text(angle=-90, size=5,  hjust = 0, vjust=0.5), 
         legend.position="none") + xlab("") + 
-  ylab("Frequency")
+  ylab("Frequency") +
+  theme(plot.margin=unit(c(0,0,0,0), unit="line"))
 @
+\caption{\label{fig:hiv}}
+\end{figure}
+
+\section{Discussion and Conclusions}
+\hh{XXX one problem with the logo plot in general are the negative numbers on the $y$-axis. below 0. Is there a way to make those numbers positive? Neither one of the information measures can be negative. }
+
+\bibliographystyle{natbib}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{references}
 
 \end{document}
 
