@@ -222,7 +222,7 @@ In this example, the first line is parsed and the string ``Dog" is returned as t
 
 \section{Examples}
 \subsection{Re-design of Biovis}
-Figure~\ref{fig:1} shows the re-design of the logo sequence from figure~\ref{original logo}.
+Figure~\ref{fig:1} shows the re-design of the logo sequence from figure~\ref{fig:original}.
 \hh{XXX needs a bit more}
 The ADK lid domain structure is universally conserved, but is stabilized in the Gram-negatives by a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29 (and several other residues in some organisms), while the Gram-positives are stabilized by a bound metal ion, tetrahedrally coordinated by four Cysteine residues at 4, 7, 24 and 27. A percentage of 11.6\% ($\pm 2.2$) Gram-positive bacteria stabilizes their ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
 The identities of several other positions (eg 5, 8, 30, 32) are differentially constrained in each subfamily as well, apparently due to steric requirements of the stabilizing residues.
@@ -272,7 +272,12 @@ ggplot(dm5b, aes(x=class, y=bits, group=element, label=element, fill= Polarity),
 \end{figure*}
 
 \subsection{Viral Preservation}
+\hh{XXX need to include info on where the data comes from}
+\hh{Figure~\ref{fig:hiv} shows a 
+logo plot of all sequences with at least one mismatch. Logos are aligned such, one panel is shown for each of the 34 positions of the sequence of interest. Within each position, a breakdown of bases is given for each of the two runs of  each patient. The plasmid run is shown on the very right. Here, we know that a pure sample was being sequenced - any deviations from the main sequence are sequencing errors introduced externally. Interestingly, errors in the plasmid sequencing seem to depend on the position. The amount of error in the plasmid sequence gives an idea of how much error might be introduced during sequencing in patients' sequences. }
+Both runs are very similar, reinforcing the presence of each mutation. A single exception is the mutation for patient 2\_ATG in position 15, which shows a strong mutation from G to T  in the second run that is curiously absent in the first run.
 
+\hh{XXX this might  be an example where it is informative to include the number of sequences in the visual display, because we aare focussing on only those sequences that do have at least one deviation from the common sequence. }
 
 \begin{figure}
 <<hiv-examples, echo=FALSE, fig.width=6, fig.height=12, out.width='\\columnwidth'>>=
