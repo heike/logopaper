@@ -276,10 +276,11 @@ dm2 <- splitSequence(frm2, "X")
 dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
 dm4$element <- factor(dm4$element, levels = c("A", "T", "C", "G"))
 dm4$patientrun <- with(dm4, paste(c(LETTERS[1:12], "plasmid")[as.numeric(variable)], run, sep="."))
+dm4$poslabel <- paste("pos:", dm4$position, sep=" ")
 ggplot(data=dm4, aes(x=patientrun, y=info, group=element, 
                      label=element, fill=element), alpha=0.8) + 
   geom_logo() + scale_fill_manual(values=cols) + 
-  facet_wrap(~position, ncol=4, labeller="label_both") + theme_bw() + 
+  facet_wrap(~poslabel, ncol=4) + theme_bw() + 
   theme(axis.text.x=element_text(angle=-90), 
         legend.position="none") + xlab("") + 
   ylab("Frequency")
