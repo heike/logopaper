@@ -95,6 +95,7 @@ frm$variable <- factor(frm$variable, levels=ord$variable)
 @
 
 \subsection{The traditional logo plot} 
+\hh{XXX In which areas are logo sequence plots used? }
 
 In a traditional logo sequence plot \citep{logo}, the position of an amino acid in the sequence is plotted on the horizontal axis, while on the vertical axis the amount of preserved information is shown. To measure preservation, Shannon information~\citep{shannon} is used. Shannon information  is an entropy measure given in bits, that describes the amount of mixture in each position. 
 Formally, information $I$  in position $p$ is defined as
@@ -105,7 +106,13 @@ where $f_{aa}$ is the relative frequency with which amino acid $aa$ is observed 
 For 21 amino acids, the maximal information is $-\log_2 (1/21) = 4.39$ bits, which is reached, if only a single amino acid is observed in the position, while perfect diversity, where all 21 amino acids are observed with the same frequency, results in an information of $0$ bits. 
 In the traditional plot, each amino acid is shown in each position by its corresponding letter with its height scaled to reflect the contribution to the position's total information. 
 
-\hh{Here'd be a good place to include a traditional logo plot.}
+\hh{XXX Here'd be a good place to include a traditional logo plot.}
+\begin{figure}[hbt]
+\caption{\label{fig:original} \hh{XXX placeholder for an original seq logo plot.}}
+\end{figure}
+
+\hh{XXX variations on the Shannon information?}
+
 
 \hh{The purpose of our paper is two-fold:  (1) we introduce a design overhaul of the logo plots that allow all of the comparisons of the current design, but adhere to better conventions and therefore lead users to a greater amount of detail (XXX urgh, needs some re-working), and (2) we present a webservice featuring logo plots in the new design, that allows easy access to experts in the field without any installation hassle.  }
 
@@ -174,13 +181,17 @@ In order to facilitate comparisons across subfamilies, boxes of amino acids from
 \section{Our Implementation}
 \hh{Our implementation consists of two parts: the R package gglogo, which provides an implementation of plots within the popular ggplot2 framework based on the suggestions for the re-design. The second part provides a web-interface that allows access to gglogo without the need to know R are any kind of programming. }
 \hh{XXX should we discuss some of the parameters of the R implementation? - ideally, all of the parameters are directly accessible through the web .... e.g. another menu to select the outcome variable: frequency/Shannon information.  }
-Our re-design is implemented as a Shiny-based web application \cite{shiny}, using the R statistical software \cite{R}. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot will be displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left.
+Our re-design is implemented as a Shiny-based web application \cite{shiny}, using the R statistical software \cite{R}. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. 
+\hh{XXX screenshot of overview?}
+The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot is displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left.
 
 \hh{Each one of the items on the list should become a subsections with a screenshot zoomed into the corresponding part of the discussion.}
 Several advanced options are available after clicking ``Show Advanced Configuration":
 
 \subsection{Facetting}
 We often wish to compare the frequency of amino acids in each position at different levels of some factor, or grouping variable. For instance, if an experiment contained two replications, we can observe the consistency across replications by comparing each replication side by side for each position in the sequence. This technique is called \textbf{facetting} and our implementation provides a way to do this.
+
+\hh{XXX we need to tie this in to the cognitive aspect that side by side alignments allow for more effective comparisons \cite{cleveland:1984}.}
 
 In the FASTA file encoding, a line of metadata beginning with the `$>$` symbol precedes each sequence. Our application will automatically parse the first piece of metadata up to the first space encountered on this line, and treat it as a factor for which one can facet by. For instance, an example of FASTA encoding might be the following:
 
