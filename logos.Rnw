@@ -172,6 +172,8 @@ Another change to the original design is that non-identified amino acids (marked
 In order to facilitate comparisons across subfamilies, boxes of amino acids from different families are positioned side-by-side as shown in figure~\ref{fig:1b} to emphasize differences between Gram-positive and Gram-negative sequences. In a further step (not shown) this can be used to show sub-classes or clusters of sequences within a subfamily, which would represent a logical next step of an analysis and allow for an evaluation of how often and in which positions amino acids deviate from the main sequence structure. 
 
 \section{Our Implementation}
+\hh{Our implementation consists of two parts: the R package gglogo, which provides an implementation of plots within the popular ggplot2 framework based on the suggestions for the re-design. The second part provides a web-interface that allows access to gglogo without the need to know R are any kind of programming. }
+\hh{XXX should we discuss some of the parameters of the R implementation? - ideally, all of the parameters are directly accessible through the web .... e.g. another menu to select the outcome variable: frequency/Shannon information.  }
 Our re-design is implemented as a Shiny-based web application \cite{shiny}, using the R statistical software \cite{R}. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot will be displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left.
 
 \hh{Each one of the items on the list should become a subsections with a screenshot zoomed into the corresponding part of the discussion.}
@@ -258,6 +260,9 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 % argument is your BibTeX string definitions and bibliography database(s)
 \bibliography{references}
 
+\hh{XXX one problem with the logo plot in general are the negative numbers on the $y$-axis. below 0. Is there a way to make those numbers positive? Neither one of the information measures can be negative. }
+
+\hh{XXX specific problem with the HIV example: patients should be just letters. }
 <<hiv-examples, echo=FALSE, fig.width=6, fig.height=12, out.width='\\columnwidth'>>=
 suppressMessages(library(gglogo))
 suppressMessages(library(RColorBrewer))
@@ -270,13 +275,14 @@ frm2 <- subset(frm, value < 50000)
 dm2 <- splitSequence(frm2, "X")
 dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
 dm4$element <- factor(dm4$element, levels = c("A", "T", "C", "G"))
-dm4$patientrun <- with(dm4, paste(variable, run, sep="."))
+dm4$patientrun <- with(dm4, paste(c(LETTERS[1:12], "plasmid")[as.numeric(variable)], run, sep="."))
 ggplot(data=dm4, aes(x=patientrun, y=info, group=element, 
                      label=element, fill=element), alpha=0.8) + 
   geom_logo() + scale_fill_manual(values=cols) + 
-  facet_wrap(~position, ncol=4) + theme_bw() + 
+  facet_wrap(~position, ncol=4, labeller="label_both") + theme_bw() + 
   theme(axis.text.x=element_text(angle=-90), 
-        legend.position="none") + xlab("")
+        legend.position="none") + xlab("") + 
+  ylab("Frequency")
 @
 
 \end{document}
