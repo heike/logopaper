@@ -179,8 +179,13 @@ Another change to the original design is that non-identified amino acids (marked
 In order to facilitate comparisons across subfamilies, boxes of amino acids from different families are positioned side-by-side as shown in figure~\ref{fig:1b} to emphasize differences between Gram-positive and Gram-negative sequences. In a further step (not shown) this can be used to show sub-classes or clusters of sequences within a subfamily, which would represent a logical next step of an analysis and allow for an evaluation of how often and in which positions amino acids deviate from the main sequence structure. 
 
 \section{Our Implementation}
-\hh{Our implementation consists of two parts: the R package gglogo, which provides an implementation of plots within the popular ggplot2 framework based on the suggestions for the re-design. The second part provides a web-interface that allows access to gglogo without the need to know R are any kind of programming. }
+Our implementation consists of two parts: the R package \textbf{gglogo}, which provides an implementation of plots within the popular ggplot2 framework using the previously mentioned design principles. The second part provides a web-interface that allows access to \textbf{gglogo} without requiring programming knowledge by the user.
+
+\subsection{gglogo}
+
 \hh{XXX should we discuss some of the parameters of the R implementation? - ideally, all of the parameters are directly accessible through the web .... e.g. another menu to select the outcome variable: frequency/Shannon information.  }
+
+\subsection{Web Interface}
 Our re-design is implemented as a Shiny-based web application \cite{shiny}, using the R statistical software \cite{R}. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. 
 \hh{XXX screenshot of overview?}
 The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot is displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left.
@@ -188,7 +193,7 @@ The software allows users to input sequencing data in the FASTA format, or uploa
 \hh{Each one of the items on the list should become a subsections with a screenshot zoomed into the corresponding part of the discussion.}
 Several advanced options are available after clicking ``Show Advanced Configuration":
 
-\subsection{Facetting}
+\subsubsection{Facetting}
 We often wish to compare the frequency of amino acids in each position at different levels of some factor, or grouping variable. For instance, if an experiment contained two replications, we can observe the consistency across replications by comparing each replication side by side for each position in the sequence. This technique is called \textbf{facetting} and our implementation provides a way to do this.
 
 \hh{XXX we need to tie this in to the cognitive aspect that side by side alignments allow for more effective comparisons \cite{cleveland:1984}.}
