@@ -214,16 +214,13 @@ In this example, the first line is parsed and the string ``Dog" is returned as t
   \label{fig:facetting}
 \end{figure}
 
-\begin{itemize}
-    \item The plot groups can be defined. The name of the group, and the color of the amino acids for that group in the logo plut can be selected.
-    \hh{plot groups is the code internal name, right? what the user sees is the color, so just flip the order of the description and start with color for different amino acids based on different ways of grouping them - can we already link to the amino acid database? If not, let's include that in the conclusions under future work. }
-    
-    \item A plot title, x axis label, and y axis label can be provided.
-    \hh{these are all options of directly manipulating the resulting logoplot in the browser. the header of this section should be something like that.}
-    
-    \item \hh{`Saving the result' ? } The image format for downloading the image can be selected as either png, jpg, or pdf. 
-    \item The DPI (dots per inch) of the image can be defined. \hh{this should be included as an option in the last item}
-\end{itemize}
+\subsubsection{Modifying the Appearance}
+Several properties of the plot can also be defined. The color for each amino acid can be defined based on several different groupings \eh{In progress, will expand on this...}.
+
+The labels of the plot are also configurable. In the Advanced Configuration panel, options to modify the plot title, x axis title, and y axis title are available.
+
+\subsubsection{Saving the Result}
+The resulting logo plot can be easily downloaded. A Download button appears on the left, which will save the plot as an image file on your computer. Within the Advanced Configuration panel, the image format can be selected as either png, jpg, or pdf. Finally, the DPI (dots per inch) of the image can be defined.
 
 \section{Examples}
 \subsection{Re-design of Biovis}
