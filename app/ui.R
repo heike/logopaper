@@ -7,10 +7,10 @@ fluidPage(theme = shinytheme("cerulean"),
     titlePanel("GGLogo Prototype"),
     
     sidebarLayout(
-        sidebarPanel(
+        sidebarPanel(width = 3,
             h4("Sequence"),
             
-            selectizeInput("mychoice", label = "Choose Input Method", choices = c("Upload Sequence Data" = "upload", "Type Sequence Data" = "type")),
+            selectizeInput("mychoice", label = "Choose Input Method", choices = c("Upload Seq Data" = "upload", "Type Seq Data" = "type")),
             
             conditionalPanel(condition = "input.mychoice == 'type'", 
                 helpText("Input sequencing data"),
@@ -18,7 +18,7 @@ fluidPage(theme = shinytheme("cerulean"),
             ),
             
             conditionalPanel(condition = "input.mychoice == 'upload'", 
-                fileInput("data", "Upload Sequence Data (FASTA)")
+                fileInput("data", "Upload Data (FASTA)")
             ),
             
             #actionButton("confirm", "Build Logo Plot"),
@@ -37,7 +37,9 @@ fluidPage(theme = shinytheme("cerulean"),
                 h5("Plot Options"),
                 selectizeInput("facetvar", label = "Facet Variable", choices = c("None", "Factor")),
                 selectizeInput("colorvar", label = "Color By", choices = c("Polarity", "Water")),
-                                
+                         
+                hr(),
+                       
                 h5("Plot Labels"),
                 textInput("title", "Plot Title", value = ""),
                 textInput("xlab", "X Axis Label", value = "position"),
@@ -51,9 +53,9 @@ fluidPage(theme = shinytheme("cerulean"),
             )
         ),
         
-        mainPanel(
-            plotOutput("logoplot", height = "800px"),
-            sliderInput("zoom", "Sequence Region", min = 1, max = 231, value = c(1, 30), width = "100%", dragRange = TRUE, animate = TRUE)
+        mainPanel(width = 9,
+            sliderInput("zoom", "Sequence Region", min = 1, max = 231, value = c(1, 30), width = "100%", dragRange = TRUE, animate = TRUE),
+            plotOutput("logoplot", height = "500px")
         )
     )
 )

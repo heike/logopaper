@@ -79,13 +79,15 @@ function(input, output, session) {
             my_text <- element_text(angle = ifelse(input$facetvar == "Factor", 90, 0), vjust = ifelse(input$facetvar == "Factor", 0.5, 1))
             
             dm3b$Color <- dm3b[,input$colorvar]
+            dm3bb <- subset(dm3b, element != "-")
             
             ggplot(dm3b, aes(x = x_var, y = bits, group = element, label = element, fill = Color), alpha = 0.8) + 
                 geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + 
                 geom_logo() + 
+                scale_fill_discrete(na.value = "white") +
                 geom_hline(yintercept=0, colour="white", size=0.5) + 
                 geom_hline(yintercept=0, colour="grey30", size=0.125) + 
-                theme_bw() + theme(legend.position="bottom", plot.margin=unit(c(0,0,0,0), "cm"), axis.text.x = my_text) + 
+                theme_bw() + theme(legend.position="top", plot.margin=unit(c(0,0,0,0), "cm"), axis.text.x = my_text) + 
                 xlab(input$xlab) +
                 ylab(input$ylab) + 
                 ggtitle(input$title) +
