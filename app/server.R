@@ -7,10 +7,7 @@ library(plyr)
 library(dplyr)
 library(seqinr)
 
-data(sequences)
 data(aacids)
-
-# Hook into amino acid package to select option for polarity
 
 function(input, output, session) {
     
@@ -29,17 +26,8 @@ function(input, output, session) {
     output$plotbuilt <- reactive({
         return(nrow(my.seqdata()) > 0)
     })
-    outputOptions(output, 'plotbuilt', suspendWhenHidden=FALSE)
-    
-    mydf <- reactive({
-        mydf1 <- data.frame(AA = strsplit(input$colgrp1, "")[[1]], Color = input$col1)
-        mydf2 <- data.frame(AA = strsplit(input$colgrp2, "")[[1]], Color = input$col2)
-        mydf3 <- data.frame(AA = strsplit(input$colgrp3, "")[[1]], Color = input$col3)
-        mydf4 <- data.frame(AA = strsplit(input$colgrp4, "")[[1]], Color = input$col4)
-        
-        rbind(mydf1, mydf2, mydf3, mydf4)
-    })
-    
+    outputOptions(output, 'plotbuilt', suspendWhenHidden = FALSE)
+
     my.df <- reactive({
         if (nchar(values$seqs) == 0 && is.null(seqs.initial())) return(NULL)
         
@@ -79,22 +67,22 @@ function(input, output, session) {
             my.trt <- if (input$facetvar == "Factor") "factor" else NULL
             
             dm3 <- calcInformation(dm2, trt = my.trt, pos="position", elems="element", k=21)
-            dm3b <- merge(dm3, aacids, by.x="element", by.y="AA", all.x=T)
-            dm3bb <- merge(dm3b, mydf(), by.x = "element", by.y = "AA", all.x = T)
+            dm3b <- merge(dm3, aacids, by.x = "element", by.y = "AA", all.x = TRUE)
 
-            dm3bb$position <- as.numeric(as.character(dm3bb$position))
-            dm3bb$position <- dm3bb$position + input$zoom[1] - 1
-            dm3bb$position <- factor(dm3bb$position, levels = sort(unique(dm3bb$position)))
+            dm3b$position <- as.numeric(as.character(dm3b$position))
+            dm3b$position <- dm3b$position + input$zoom[1] - 1
+            dm3b$position <- factor(dm3b$position, levels = sort(unique(dm3b$position)))
             
-            #dm3bb$facet_group <- cut(as.numeric(dm3bb$position), seq(0, max(as.numeric(dm3bb$position)) + 29, by = 30), labels = FALSE)
+            #dm3b$facet_group <- cut(as.numeric(dm3b$position), seq(0, max(as.numeric(dm3b$position)) + 29, by = 30), labels = FALSE)
             
-            dm3bb$x_var <- if (input$facetvar == "Factor") dm3bb$factor else dm3bb$position
+            dm3b$x_var <- if (input$facetvar == "Factor") dm3b$factor else dm3b$position
             my_text <- element_text(angle = ifelse(input$facetvar == "Factor", 90, 0), vjust = ifelse(input$facetvar == "Factor", 0.5, 1))
             
-            ggplot(dm3bb, aes(x = x_var, y = bits, group = element, label = element, fill = Color), alpha = 0.8) + 
+            dm3b$Color <- dm3b[,input$colorvar]
+            
+            ggplot(dm3b, aes(x = x_var, y = bits, group = element, label = element, fill = Color), alpha = 0.8) + 
                 geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + 
                 geom_logo() + 
-                scale_fill_manual("Polarity", values=cols, labels = c(input$name1, input$name2, input$name3, input$name4)) +  
                 geom_hline(yintercept=0, colour="white", size=0.5) + 
                 geom_hline(yintercept=0, colour="grey30", size=0.125) + 
                 theme_bw() + theme(legend.position="bottom", plot.margin=unit(c(0,0,0,0), "cm"), axis.text.x = my_text) + 
