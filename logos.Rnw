@@ -274,7 +274,8 @@ ggplot(dm5b, aes(x=class, y=bits, group=element, label=element, fill= Polarity),
 \end{figure*}
 
 \subsection{Viral Preservation}
-\hh{XXX need to include info on where the data comes from}
+\hh{XXX need to include info on where the data comes from XXX}
+\hh{XXX the labelling of the sequences in the plot needs to be more directly - maybe a grey background for every other patient would help with the grouping - right now it is hard to tell the change in runs from the change in patients. XXX}
 \hh{Figure~\ref{fig:hiv} shows a 
 logo plot of all sequences with at least one mismatch. Logos are aligned such, one panel is shown for each of the 34 positions of the sequence of interest. Within each position, a breakdown of bases is given for each of the two runs of  each patient. The plasmid run is shown on the very right. Here, we know that a pure sample was being sequenced - any deviations from the main sequence are sequencing errors introduced externally. Interestingly, errors in the plasmid sequencing seem to depend on the position. The amount of error in the plasmid sequence gives an idea of how much error might be introduced during sequencing in patients' sequences. }
 Both runs are very similar, reinforcing the presence of each mutation. A single exception is the mutation for patient 2\_ATG in position 15, which shows a strong mutation from G to T  in the second run that is curiously absent in the first run.
