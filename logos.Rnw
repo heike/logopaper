@@ -296,16 +296,47 @@ frm2 <- subset(frm, value < 50000)
 dm2 <- splitSequence(frm2, "X")
 dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
 dm4$element <- factor(dm4$element, levels = c("A", "T", "C", "G"))
-dm4$patientrun <- with(dm4, paste(c(LETTERS[1:11], "plasmid")[as.numeric(variable)], run, sep="."))
+dm4$patientrun <- as.factor(with(dm4, paste(c(LETTERS[1:11], "plasmid")[as.numeric(variable)], run, sep=".")))
 dm4$poslabel <- paste("pos:", dm4$position, sep=" ")
-ggplot(data=dm4, aes(x=patientrun, y=info, group=element, 
+dm4$poslabel <- factor(dm4$poslabel)
+dm4$poslabel <- reorder(dm4$poslabel, as.numeric(gsub(" ","",dm4$position)), mean)
+dm4$patientrunID <- as.numeric(factor(dm4$patientrun))
+stripes <- list(geom_rect(xmin=2+.5, xmax=2+2.5, ymin=-0.5, ymax=1, 
+            fill="grey90", alpha=0.15), 
+            geom_rect(xmin=6+.5, xmax=6+2.5, ymin=-0.5, ymax=1, 
+            fill="grey90", alpha=0.15), 
+            geom_rect(xmin=10+.5, xmax=10+2.5, ymin=-0.5, ymax=1, 
+            fill="grey90", alpha=0.15), 
+            geom_rect(xmin=14+.5, xmax=14+2.5, ymin=-0.5, ymax=1, 
+            fill="grey90", alpha=0.15),
+            geom_rect(xmin=18+.5, xmax=18+2.5, ymin=-0.5, ymax=1, 
+            fill="grey90", alpha=0.15),
+            geom_rect(xmin=22+.5, xmax=22+2.5, ymin=-0.5, ymax=1, 
+            fill="grey90", alpha=0.15)
+            )
+texts <- list(
+  geom_text(x=1.5,label= "A", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=3.5,label= "B", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=5.5,label= "C", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=7.5,label= "D", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=9.5,label= "E", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=11.5,label= "F", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=13.5,label= "G", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=15.5,label= "H", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=17.5,label= "I", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=19.5,label= "J", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=21.5,label= "K", y=-0.5, colour="grey70", size=2, vjust=0))
+
+ggplot(data=dm4, aes(x=patientrunID, y=info, group=element, 
                      label=element, fill=element), alpha=0.8) + 
+  stripes + texts + 
   geom_logo() + scale_fill_manual(values=cols) + 
   facet_wrap(~poslabel, ncol=4) + theme_bw() + 
   theme(axis.text.x=element_text(angle=-90, size=5,  hjust = 0, vjust=0.5), 
         legend.position="none") + xlab("") + 
   ylab("Frequency") +
-  theme(plot.margin=unit(c(0,0,0,0), unit="line"))
+  theme(plot.margin=unit(c(0,0,0,0), unit="line")) +
+  scale_x_continuous(breaks=1:24, labels=levels(dm4$patientrun)) 
 @
 \caption{\label{fig:hiv}}
 \end{figure}
