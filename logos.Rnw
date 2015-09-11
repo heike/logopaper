@@ -200,10 +200,16 @@ We often wish to compare the frequency of amino acids in each position at differ
 
 In the FASTA file encoding, a line of metadata beginning with the `$>$` symbol precedes each sequence. Our application will automatically parse the first piece of metadata up to the first space encountered on this line, and treat it as a factor for which one can facet by. For instance, an example of FASTA encoding might be the following:
 
-\begin{verbatim}
+{\small\tt\centering
+%\begin{verbatim}
 >Dog HEMOGLOBIN BETA CHAIN - DOG AND COYOTE
-----------VH-----------------LTAEEKSLVSGLWG
-\end{verbatim}
+----------VH-----------------LTAEEKSLVSGLWGKV--NV---DEVGGE
+ALGRLLIVYPWTQRFFDSFGDLSTPDAVM-----SNA---KVKAH{\it G-KKVLNSFSDGL
+KNLDNLKGTF--AKL-S}ELHCDK----LHVDPENFKLLGNVLVCVLAHHF-GK-EFTPQ
+VQ-AAYQKVVAG------V---ANALA----H-----K-----YH-----------
+%\end{verbatim}
+}
+
 
 In this example, the first line is parsed and the string ``Dog" is returned as the value for the factor variable. The application will then group all other instances of Dog sequences, and allow easy comparison with the other values present in the file. This example is shown in Figure \ref{fig:facetting}.
 
@@ -284,7 +290,7 @@ Both runs are very similar, reinforcing the presence of each mutation. A single 
 \hh{XXX this might  be an example where it is informative to include the number of sequences in the visual display, because we aare focussing on only those sequences that do have at least one deviation from the common sequence. }
 
 \begin{figure*}[hbtp]
-<<hiv-examples, echo=FALSE, fig.width=8, fig.height=8, out.width='\\textwidth'>>=
+<<hiv-examples, echo=FALSE, fig.width=8, fig.height=8, out.width='\\textwidth', cache=TRUE>>=
 suppressMessages(library(gglogo))
 suppressMessages(library(RColorBrewer))
 suppressMessages(library(grid))
