@@ -118,13 +118,13 @@ In the traditional plot, each amino acid is shown in each position by its corres
 
 \subsection{Shortcomings of the traditional logo plot}
 %
-The {\bf color choice} for representing the letters of amino acids is related to water solubility and polarity (e.g.\ hydrophobic, non-polar amino acids are shown in red) but this is not explicitly stated in a legend. Further, the use of letters to represent amino acids results in shapes of different visual dominance; the letter `I' is much less visually pronounced than for example `W'.\\
+The {\bf color choice} for representing the letters of amino acids is related to water solubility and polarity (e.g.\ hydrophobic, non-polar amino acids are shown in red) but this is not explicitly stated in a legend. Further, the use of letters to represent amino acids results in shapes of different visual dominance; the letter `I' is much less visually pronounced than for example `W'.
 
-\hh{This has also the potential of leading to ambiguity in the representation: e.g.\~using the standard Helvetica representation, the letter F over a T is not (easily) distinguishable from a letter E over an I.}
+\hh{This has also the potential of leading to ambiguity in the representation: e.g.\ using the standard Helvetica representation, the letter F over a T is not (easily) distinguishable from a letter E over an I.}
 
-{\bf Non identified amino acids} are being ignored in the original plot -- it is of importance to keep track of at least the position  and the frequency of these occurrences, as it might indicate a problem with the sequencing.\\
+{\bf Non identified amino acids} are being ignored in the original plot -- it is of importance to keep track of at least the position  and the frequency of these occurrences, as it might indicate a problem with the sequencing.
 
-The plotting of {\bf sequences of subfamilies} in separate logo plots does not facilitate a comparison of them. Researchers are in particular interested in differences in the conservation of amino acids between subfamilies.\\
+The plotting of {\bf sequences of subfamilies} in separate logo plots does not facilitate a comparison of them. Researchers are in particular interested in differences in the conservation of amino acids between subfamilies.
 
 The {\bf number of sequences} in each of the subfamilies is not shown directly. This influences  the inherent variability. It is therefore important to keep track of these numbers to be able to assess how and whether the size of each subfamily affects conservation.
 %
