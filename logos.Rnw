@@ -283,8 +283,8 @@ Both runs are very similar, reinforcing the presence of each mutation. A single 
 
 \hh{XXX this might  be an example where it is informative to include the number of sequences in the visual display, because we aare focussing on only those sequences that do have at least one deviation from the common sequence. }
 
-\begin{figure}
-<<hiv-examples, echo=FALSE, fig.width=6, fig.height=12, out.width='\\columnwidth'>>=
+\begin{figure*}[hbtp]
+<<hiv-examples, echo=FALSE, fig.width=8, fig.height=8, out.width='\\textwidth'>>=
 suppressMessages(library(gglogo))
 suppressMessages(library(RColorBrewer))
 suppressMessages(library(grid))
@@ -301,17 +301,17 @@ dm4$poslabel <- paste("pos:", dm4$position, sep=" ")
 dm4$poslabel <- factor(dm4$poslabel)
 dm4$poslabel <- reorder(dm4$poslabel, as.numeric(gsub(" ","",dm4$position)), mean)
 dm4$patientrunID <- as.numeric(factor(dm4$patientrun))
-stripes <- list(geom_rect(xmin=2+.5, xmax=2+2.5, ymin=-0.5, ymax=1, 
+stripes <- list(geom_rect(xmin=2+.5, xmax=2+2.5, ymin=-0.55, ymax=1, 
             fill="grey90", alpha=0.15), 
-            geom_rect(xmin=6+.5, xmax=6+2.5, ymin=-0.5, ymax=1, 
+            geom_rect(xmin=6+.5, xmax=6+2.5, ymin=-0.55, ymax=1, 
             fill="grey90", alpha=0.15), 
-            geom_rect(xmin=10+.5, xmax=10+2.5, ymin=-0.5, ymax=1, 
+            geom_rect(xmin=10+.5, xmax=10+2.5, ymin=-0.55, ymax=1, 
             fill="grey90", alpha=0.15), 
-            geom_rect(xmin=14+.5, xmax=14+2.5, ymin=-0.5, ymax=1, 
+            geom_rect(xmin=14+.5, xmax=14+2.5, ymin=-0.55, ymax=1, 
             fill="grey90", alpha=0.15),
-            geom_rect(xmin=18+.5, xmax=18+2.5, ymin=-0.5, ymax=1, 
+            geom_rect(xmin=18+.5, xmax=18+2.5, ymin=-0.55, ymax=1, 
             fill="grey90", alpha=0.15),
-            geom_rect(xmin=22+.5, xmax=22+2.5, ymin=-0.5, ymax=1, 
+            geom_rect(xmin=22+.5, xmax=22+2.5, ymin=-0.55, ymax=1, 
             fill="grey90", alpha=0.15)
             )
 texts <- list(
@@ -325,21 +325,25 @@ texts <- list(
   geom_text(x=15.5,label= "H", y=-0.5, colour="grey70", size=2, vjust=0),
   geom_text(x=17.5,label= "I", y=-0.5, colour="grey70", size=2, vjust=0),
   geom_text(x=19.5,label= "J", y=-0.5, colour="grey70", size=2, vjust=0),
-  geom_text(x=21.5,label= "K", y=-0.5, colour="grey70", size=2, vjust=0))
+  geom_text(x=21.5,label= "K", y=-0.5, colour="grey70", size=2, vjust=0),
+  geom_text(x=23.5,label= "plasmid", y=-0.5, colour="grey70", angle=90,
+            size=1.5,  hjust = 0, vjust=0.5))
 
 ggplot(data=dm4, aes(x=patientrunID, y=info, group=element, 
                      label=element, fill=element), alpha=0.8) + 
   stripes + texts + 
   geom_logo() + scale_fill_manual(values=cols) + 
-  facet_wrap(~poslabel, ncol=4) + theme_bw() + 
+  facet_wrap(~poslabel, ncol=6) + theme_bw() + 
   theme(axis.text.x=element_text(angle=-90, size=5,  hjust = 0, vjust=0.5), 
         legend.position="none") + xlab("") + 
   ylab("Frequency") +
+  theme(axis.text.x=element_blank(), axis.title.x=element_blank(), 
+        axis.ticks.x=element_blank()) +
   theme(plot.margin=unit(c(0,0,0,0), unit="line")) +
   scale_x_continuous(breaks=1:24, labels=levels(dm4$patientrun)) 
 @
 \caption{\label{fig:hiv}}
-\end{figure}
+\end{figure*}
 
 \section{Discussion and Conclusions}
 \hh{XXX one problem with the logo plot in general are the negative numbers on the $y$-axis. below 0. Is there a way to make those numbers positive? Neither one of the information measures can be negative. }
