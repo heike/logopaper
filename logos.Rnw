@@ -194,9 +194,7 @@ The software allows users to input sequencing data in the FASTA format, or uploa
 Several advanced options are available after clicking ``Show Advanced Configuration":
 
 \subsubsection{Facetting}
-We often wish to compare the frequency of amino acids in each position at different levels of some factor, or grouping variable. For instance, if an experiment contained two replications, we can observe the consistency across replications by comparing each replication side by side for each position in the sequence. This technique is called \textbf{facetting} and our implementation provides a way to do this.
-
-\hh{XXX we need to tie this in to the cognitive aspect that side by side alignments allow for more effective comparisons \cite{cleveland:1984}.}
+We often wish to compare the frequency of amino acids in each position at different levels of some factor, or grouping variable. For instance, if an experiment contained two replications, we can observe the consistency across replications by comparing each replication side by side for each position in the sequence. Side-by-side alignments allow for more effective comparisons. In particular, judging the relative height of two bars is done significantly better when they are positioned next to one another \cite{cleveland:1984}. Our implementation provides a way to \textbf{facet} by some variable, so that these comparisons can be more easily made in a logo plot.
 
 In the FASTA file encoding, a line of metadata beginning with the `$>$` symbol precedes each sequence. Our application will automatically parse the first piece of metadata up to the first space encountered on this line, and treat it as a factor for which one can facet by. For instance, an example of FASTA encoding might be the following:
 
@@ -210,7 +208,6 @@ VQ-AAYQKVVAG------V---ANALA----H-----K-----YH-----------
 %\end{verbatim}
 }
 
-
 In this example, the first line is parsed and the string ``Dog" is returned as the value for the factor variable. The application will then group all other instances of Dog sequences, and allow easy comparison with the other values present in the file. This example is shown in Figure \ref{fig:facetting}.
 
 \begin{figure}[H]
@@ -221,9 +218,7 @@ In this example, the first line is parsed and the string ``Dog" is returned as t
 \end{figure}
 
 \subsubsection{Modifying the Appearance}
-Several properties of the plot can also be defined. The color for each amino acid can be defined based on several different groupings \eh{In progress, will expand on this...}.
-
-The labels of the plot are also configurable. In the Advanced Configuration panel, options to modify the plot title, x axis title, and y axis title are available.
+Several properties of the plot can also be defined. The color of the amino acids can be defined according to either the polarity, or the water solubility, as previously discussed. The labels of the plot are also configurable. In the Advanced Configuration panel, options to modify the plot title, x axis title, and y axis title are available.
 
 \subsubsection{Saving the Result}
 The resulting logo plot can be easily downloaded. A Download button appears on the left, which will save the plot as an image file on your computer. Within the Advanced Configuration panel, the image format can be selected as either png, jpg, or pdf. Finally, the DPI (dots per inch) of the image can be defined.
