@@ -103,7 +103,7 @@ function(input, output, session) {
     output$download <- downloadHandler(
         filename = function() { paste("logoplot", input$image_format, sep = ".") },
         content = function(file) {
-            ggsave(file, plot = myplot(), dpi = input$dpi)
+            ggsave(file, plot = myplot(), dpi = input$dpi, height = 5, width = 10)
         }
     )
     
