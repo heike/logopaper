@@ -291,7 +291,7 @@ Both runs are very similar, reinforcing the presence of each mutation. A single 
 \hh{XXX this might  be an example where it is informative to include the number of sequences in the visual display, because we aare focussing on only those sequences that do have at least one deviation from the common sequence. }
 
 \begin{figure*}[hbtp]
-<<hiv-examples, echo=FALSE, fig.width=8, fig.height=8, out.width='\\textwidth', cache=TRUE>>=
+<<hiv-examples, echo=FALSE, fig.width=8, fig.height=9, out.width='\\textwidth', cache=TRUE>>=
 suppressMessages(library(gglogo))
 suppressMessages(library(RColorBrewer))
 suppressMessages(library(grid))
@@ -318,7 +318,7 @@ ggplot(data=dm4, aes(x=patientrunID, y=info, group=element,
   annotate("text", x=23.5,label= "plasmid", y=-0.5, colour="grey70", angle=90,
             size=1.5,  hjust = 0, vjust=0.5) + 
   geom_logo() + scale_fill_manual(values=cols) + 
-  facet_wrap(~poslabel, ncol=6) + theme_bw() + 
+  facet_wrap(~poslabel, ncol=5) + theme_bw() + 
   theme(axis.text.x=element_text(angle=-90, size=5,  hjust = 0, vjust=0.5), 
         legend.position="none") + xlab("") + 
   ylab("Frequency") +
