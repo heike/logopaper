@@ -256,7 +256,7 @@ cols <- c("grey80", brewer.pal(3,"RdYlBu"))
 
 dm3 <- calcInformation(dm2, pos="position", elems="element", k=21)
 dm3b <- merge(dm3, aacids, by.x="element", by.y="AA", all.x=T)
-ggplot(dm3b, aes(x=position, y=bits, group=element, label=element, fill=Polarity), alpha=0.8) + geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + geom_logo() + scale_fill_manual("Polarity", values=cols) +  theme_bw() + theme(legend.position="bottom") + ylab("bits") + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
+ggplot(dm3b, aes(x=position, y=bits, group=element, label=element, fill=Polarity)) + geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + geom_logo(alpha=0.8) + scale_fill_manual("Polarity", values=cols) +  theme_bw() + theme(legend.position="bottom") + ylab("bits") + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
 @
 \end{subfigure}% 
 \hfill
@@ -272,7 +272,7 @@ dm5b <- merge(dm5, dm4b, by="class")
 dm5b$width <- 0.95*dm5b$width/max(dm5b$width)
 levels(dm5b$class) <- c("-", "+")
 
-ggplot(dm5b, aes(x=class, y=bits, group=element, label=element, fill= Polarity), alpha=0.8) + geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + geom_logo(aes(width=width)) + scale_fill_manual("Polarity", values=cols, guide=guide_legend(nrow=2)) + facet_wrap(~position, nrow=2) + theme_bw() + theme(legend.position="none") + xlab("") + ylab("bits")  + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
+ggplot(dm5b, aes(x=class, y=bits, group=element, label=element, fill= Polarity)) + geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + geom_logo(aes(width=width), alpha=0.8) + scale_fill_manual("Polarity", values=cols, guide=guide_legend(nrow=2)) + facet_wrap(~position, nrow=2) + theme_bw() + theme(legend.position="none") + xlab("") + ylab("bits")  + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
 @
 \end{subfigure} 
 \caption{ 
