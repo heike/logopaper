@@ -309,15 +309,42 @@ dm4$poslabel <- factor(dm4$poslabel)
 dm4$poslabel <- reorder(dm4$poslabel, as.numeric(gsub(" ","",dm4$position)), mean)
 dm4$patientrunID <- as.numeric(factor(dm4$patientrun))
 
+labels <- data.frame(
+  label=LETTERS[1:11], 
+  x = 2*(1:11)-0.5
+)
+
+rects <- data.frame(
+  xmin = 4*(1:6)-1.5, 
+  xmax =4*(1:6)+.5)
+  
+poslabels <- data.frame(expand.grid(
+  label=LETTERS[1:11],
+  poslabel=levels(dm4$poslabel)
+))
+
+labelsbypos <- merge(labels, poslabels, by="label")
+
+rectsbypos <- merge(rects, 
+                    data.frame(expand.grid(
+                      xmin = 4*(1:6)-1.5,
+                      poslabel=levels(dm4$poslabel)
+                    )),
+                    by="xmin")
+
 ggplot(data=dm4, aes(x=patientrunID, y=info, group=element, 
-                     label=element, fill=element), alpha=0.8) + 
-  annotate("rect", ymin=-0.5, ymax=1, fill="grey90", 
-           xmin=4*(1:6)-1.5, xmax =4*(1:6)+.5) +
-  annotate("text", x=2*(1:11)-0.5, label=LETTERS[1:11], y=-0.5, size=2, 
-           vjust=0, color="grey70") +
+                     label=element, fill=element)) + 
+  geom_rect(data=rectsbypos, ymin=-0.5, ymax=1, fill="grey90", 
+            aes(xmin=xmin, xmax=xmax), inherit.aes=FALSE) +
+  geom_text(data=labelsbypos, y=-0.5, size=2, vjust=0, colour="grey70", 
+            aes(x=x, label=label), inherit.aes=FALSE) +
+#  annotate("rect", ymin=-0.5, ymax=1, fill="grey90", 
+#           xmin=4*(1:6)-1.5, xmax =4*(1:6)+.5) +
+#  annotate("text", x=2*(1:11)-0.5, label=LETTERS[1:11], y=-0.5, size=2, 
+#           vjust=0, color="grey70") +
   annotate("text", x=23.5,label= "plasmid", y=-0.5, colour="grey70", angle=90,
             size=1.5,  hjust = 0, vjust=0.5) + 
-  geom_logo() + scale_fill_manual(values=cols) + 
+  geom_logo(alpha=0.8) + scale_fill_manual(values=cols) + 
   facet_wrap(~poslabel, ncol=5) + theme_bw() + 
   theme(axis.text.x=element_text(angle=-90, size=5,  hjust = 0, vjust=0.5), 
         legend.position="none") + xlab("") + 
