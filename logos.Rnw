@@ -334,7 +334,7 @@ rectsbypos <- merge(rects,
 
 ggplot(data=dm4, aes(x=patientrunID, y=info, group=element, 
                      label=element, fill=element)) + 
-  geom_rect(data=rectsbypos, ymin=-0.5, ymax=1, fill="grey90", 
+  geom_rect(data=rectsbypos, ymin=-0.5, ymax=1, fill="grey80", alpha=0.5, 
             aes(xmin=xmin, xmax=xmax), inherit.aes=FALSE) +
   geom_text(data=labelsbypos, y=-0.5, size=2, vjust=0, colour="grey70", 
             aes(x=x, label=label), inherit.aes=FALSE) +
