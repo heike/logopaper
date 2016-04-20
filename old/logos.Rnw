@@ -39,7 +39,7 @@
 \authorfooter{
 %% insert punctuation at end of each item
 %\item
-Eric Hare is  graduate student of Statistics at Iowa State University, E-mail: erichare@iastate.edu.
+Eric Hare is   graduate student of Statistics at Iowa State University, E-mail: erichare@iastate.edu.
 %\item
 
 Heike Hofmann is  Professor of Statistics and faculty member in the Human Computer Interaction program at Iowa State University, E-mail: hofmann@iastate.edu.
