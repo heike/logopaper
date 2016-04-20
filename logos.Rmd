@@ -1,0 +1,332 @@
+---
+title: Online logo plots
+author:
+  - name: Eric Hare
+    affiliation: Iowa State University
+    address:
+    - 1121 Snedecor Hall
+    - Ames, IA, 50011
+    email: erichare@iastate.edu
+  - name: Heike Hofmann
+    affiliation: Iowa State University
+    address:
+    - 2413 Snedecor Hall
+    - Ames, IA, 50011
+    email: hofmann@iastate.edu
+  - name: Helga Hofmann-Sieber
+    affiliation: Heinrich-Pette-Institute Leibniz Institute
+    address:
+    email: helga.hofmann-sieber@hpi.uni-hamburg.de
+abstract: >
+preamble: >
+    \usepackage{float}
+    \usepackage{subcaption}
+output: rticles::rjournal_article
+---
+
+\newcommand{\hh}[1]{{\color{magenta} #1}}
+\newcommand{\eh}[1]{{\color{red} #1}}
+
+# Introduction
+
+```{r, echo=FALSE, cache=FALSE, message=FALSE}
+library(reshape2)
+library(grid)
+library(ggplot2)
+library(RColorBrewer)
+library(dplyr)
+library(gglogo)
+```
+
+```{r, echo=FALSE, message=FALSE}
+df1 <- read.csv("data/frequencies.csv")[1:13]
+df2 <- read.csv("data/frequencies-2nd.csv")[1:13]
+
+df1$run <- 1
+df2$run <- 2
+
+df1 <- df1[-grep("N", df1$X),]
+df2 <- df2[-grep("N", df2$X),]
+
+frm1 <- melt(df1, id.vars=c("X", "run"))
+frm2 <- melt(df2, id.vars=c("X", "run"))
+frm <- rbind(frm1, frm2)
+frm$X <- as.character(frm$X)
+
+frm$variable <- gsub("_S._","_", as.character(frm$variable))
+frm$variable <- gsub("[hi]","", as.character(frm$variable))
+frm$variable <- gsub("2_GCT","plasmid", as.character(frm$variable))
+frm$variable <- gsub("plasmd","plasmid", as.character(frm$variable))
+
+ord <- frm %>% group_by(variable) %>% summarize(
+  means=sum(value[which(X=="AACCCACTGCTTAAGCCTCAATAAAGCTTGCCTT")])/sum(value))
+ord <- ord[order(ord$means),]
+
+frm$variable <- factor(frm$variable, levels=ord$variable)
+```
+
+\hh{
+Ok, so let's do a to-do list first:
+
+- We need a gentler intro to logo plots and a lit review of them, including the citations coming from the biovis re-design challenge \url{http://www.biovis.net/year/2013/info/redesign-contest}, and the reference to  seqLogo (bioconductor package by \citet{seqlogo})
+- discussion of the cognitive challenges, and our solutions
+- some option of coloring by difference? (this could be based on a comparison of  multinomial distributions)
+}
+
+# The traditional logo plot
+
+\hh{XXX In which areas are logo sequence plots used? }
+
+In a traditional logo sequence plot \citep{logo}, the position of an amino acid in the sequence is plotted on the horizontal axis, while on the vertical axis the amount of preserved information is shown. To measure preservation, Shannon information~\citep{shannon} is used. Shannon information  is an entropy measure given in bits, that describes the amount of mixture in each position. 
+Formally, information $I$  in position $p$ is defined as
+\[
+I(p) = \log_2(21) + \sum_{aa} f_{aa} \log_2(f_{aa}),
+\]
+where $f_{aa}$ is the relative frequency with which amino acid $aa$ is observed at  position $p$.
+For 21 amino acids, the maximal information is $-\log_2 (1/21) = 4.39$ bits, which is reached, if only a single amino acid is observed in the position, while perfect diversity, where all 21 amino acids are observed with the same frequency, results in an information of $0$ bits. 
+In the traditional plot, each amino acid is shown in each position by its corresponding letter with its height scaled to reflect the contribution to the position's total information. 
+
+\hh{XXX Here'd be a good place to include a traditional logo plot.}
+\begin{figure}[hbt]
+\caption{\label{fig:original} \hh{XXX placeholder for an original seq logo plot.}}
+\end{figure}
+
+\hh{XXX variations on the Shannon information?}
+
+\hh{The purpose of our paper is two-fold:  (1) we introduce a design overhaul of the logo plots that allow all of the comparisons of the current design, but adhere to better conventions and therefore lead users to a greater amount of detail (XXX urgh, needs some re-working), and (2) we present a webservice featuring logo plots in the new design, that allows easy access to experts in the field without any installation hassle.  }
+
+## Shortcomings of the traditional logo plot
+
+The **color choice** for representing the letters of amino acids is related to water solubility and polarity (e.g.\ hydrophobic, non-polar amino acids are shown in red) but this is not explicitly stated in a legend. Further, the use of letters to represent amino acids results in shapes of different visual dominance; the letter `I' is much less visually pronounced than for example `W'.
+
+\hh{This has also the potential of leading to ambiguity in the representation: e.g.\ using the standard Helvetica representation, the letter F over a T is not (easily) distinguishable from a letter E over an I.}
+
+**Non identified amino acids** are being ignored in the original plot -- it is of importance to keep track of at least the position  and the frequency of these occurrences, as it might indicate a problem with the sequencing.
+
+The plotting of **sequences of subfamilies** in separate logo plots does not facilitate a comparison of them. Researchers are in particular interested in differences in the conservation of amino acids between subfamilies.
+
+The **number of sequences** in each of the subfamilies is not shown directly. This influences  the inherent variability. It is therefore important to keep track of these numbers to be able to assess how and whether the size of each subfamily affects conservation.
+%
+## Relevant Literature
+\hh{This needs to be worked into a paragraph:}
+
+(Online) tools for logo plot creation:
+\begin{itemize}
+\item RWebLogo R Code, wrapper for python code (BSD licence) \cite{rweblogo}
+\item WebLogo Python Code Python Code (BSD license, somewhat difficult to use)
+\item WebLogo 3.0 \cite{weblogo}
+\item Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
+\item MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
+\item GENIO (Online, \url{http://www.biogenio.com/logo/} - no other apparent reference)
+\item PWM-based logo (Online application for motif PWM-based models) - XXX can't find an appropriate reference
+\item LogoBar \cite{logobar} (Java application)
+\item CorreLogo \cite{correlogo} An online server for 3D sequence logos of RNA and DNA alignments
+\item seqLogo \cite{seqlogo} C function to generate DNA sequence logos (the reference is for the R package. I am not sure that there are C functions)
+\item MS-Word AddOn Ribbon that allows generation of consensus logos - can't find a reference besides to http://sourceforge.net/projects/bioword/?source=navbar
+\item RILogo program and web server \cite{rilogo} for creating logos for two interacting RNAs
+\item Skylign Online tool  \cite{skylign} for creating logos representing both sequence alignments and profile hidden Markov models
+\end{itemize}
+\section{Aspects of the redesign}
+
+\hh{We will highlight aspects of the re-design using data made available as part of the BioVis 2013 re-design challenge (see  \url{http://www.biovis.net/year/2013/info/redesign-contest})}. The data consists of 1809 protein sequences of length 36 that are either Gram-negative (923 sequences) or  Gram-positive (886 sequences). Figure \ref{fig:1} shows logo plots featuring this data using the re-design discussed in this section.
+
+We focused on a re-design of the logo plot that will allow to easily answer the following three questions: 
+ 
+1. *How well do the observed sequences conserve the overall pattern?* 
+2. *What are differences in the conservation of the main pattern  between different types of treatment or strains?*  For this particular data set: what are the differences between Gram-positive and Gram-negative sequences?
+3. *What are the important positions and amino acids between the different treatments or strains?* Here, this translates to the question of which amino acids are important for Gram-positive sequences, which for Gram-negative.
+
+## Putting the letters in a box
+
+The visually most dominant change to the display is the addition of boxes framing each letter. This gives each amino acid visually the same weight, independent of the shape of its corresponding letter. We decided to keep the letters themselves since they incorporate valuable and immediately recognizable information in the display.
+% Construction of the plot
+The height of boxes and letters is still given by the contribution of the amino acids to the total information. 
+The width of boxes is adjusted for the number of sequences in each subfamily, if appropriate. In Figure \ref{fig:1b} this difference is not immediately visible, as the class sizes are very similar, but in case of very different class sizes a rescaling of the width is extremely helpful.
+
+As information is strictly non-negative, we can make further use of the vertical axis by aligning the bottom of the box for the most frequently observed amino acid along the horizontal axis. This makes the box heights for the top sequence directly comparable.  It also aligns the boxes for the second most frequent amino acid, enabling comparisons of either one of the two highest contributions along a common scale \citep{cleveland:1984}. This reveals a previously unnoticed subgroup in the Gram-positive bacteria.  103 out of the 886 Gram-positive bacteria stabilize their  ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
+
+
+## Color \& Shade
+Color hues are used to show two main properties of amino acids: polarity and electrical charging. Non-polar amino acids are shown in grey, polar amino acids are divided into positively charged (red), negatively charged (blue) and uncharged (yellow) amino acids. In contrast to the original plot a legend is included in the graphic. This makes it easier for the reader to identify possible interactions between polar residues at first view.
+
+
+
+## Treatment of non-identified amino acids
+Another change to the original design is that non-identified amino acids (marked by a `.' in the  sequence) are kept, and shown in the visualization by a framed, but otherwise transparent box. The Shannon information calculated for the collective of non-identified amino acids should not be interpreted as actual information, as non-identified amino acids are not necessarily the same, but the fact, that amino acids are not identified in a position is valuable and should not be ignored. For example,  non-identified amino acids contribute the second largest contingent among the Gram-positive sequences in position 28, and might be an explanation of why these sequences are not conserved as well as  Gram-negative ones.
+
+## Covariates in logos: Juxtaposition of subfamilies
+In order to facilitate comparisons across subfamilies, boxes of amino acids from different families are positioned side-by-side as shown in Figure \ref{fig:1b} to emphasize differences between Gram-positive and Gram-negative sequences. In a further step (not shown) this can be used to show sub-classes or clusters of sequences within a subfamily, which would represent a logical next step of an analysis and allow for an evaluation of how often and in which positions amino acids deviate from the main sequence structure. 
+
+# Our Implementation
+Our implementation consists of two parts: the R package \textbf{gglogo}, which provides an implementation of plots within the popular ggplot2 framework using the previously mentioned design principles. The second part provides a web-interface that allows access to \textbf{gglogo} without requiring programming knowledge by the user.
+
+## gglogo
+
+\hh{XXX should we discuss some of the parameters of the R implementation? - ideally, all of the parameters are directly accessible through the web .... e.g. another menu to select the outcome variable: frequency/Shannon information.  }
+
+## Web Interface
+
+Our re-design is implemented as a Shiny-based web application \cite{shiny}, using the R statistical software \cite{R}. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot is displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left. A screenshot of the overall application is displayed in Figure \ref{fig:interface}.
+
+\begin{figure*}
+  \centering
+    \includegraphics[width=\textwidth]{images/appscreenshot}
+  \caption{The web interface for gglogo.}
+  \label{fig:interface}
+\end{figure*}
+
+\hh{Each one of the items on the list should become a subsections with a screenshot zoomed into the corresponding part of the discussion.}
+Several advanced options are available after clicking ``Show Advanced Configuration":
+
+### Facetting
+We often wish to compare the frequency of amino acids in each position at different levels of some factor, or grouping variable. For instance, if an experiment contained two replications, we can observe the consistency across replications by comparing each replication side by side for each position in the sequence. Side-by-side alignments allow for more effective comparisons. In particular, judging the relative height of two bars is done significantly better when they are positioned next to one another \cite{cleveland:1984}. Our implementation provides a way to \textbf{facet} by some variable, so that these comparisons can be more easily made in a logo plot.
+
+In the FASTA file encoding, a line of metadata beginning with the `$>$` symbol precedes each sequence. Our application will automatically parse the first piece of metadata up to the first space encountered on this line, and treat it as a factor for which one can facet by. For instance, an example of FASTA encoding might be the following:
+
+>Dog HEMOGLOBIN BETA CHAIN - DOG AND COYOTE
+----------VH-----------------LTAEEKSLVSGLWGKV--NV---DEVGGE
+ALGRLLIVYPWTQRFFDSFGDLSTPDAVM-----SNA---KVKAHG-KKVLNSFSDGL
+KNLDNLKGTF--AKL-SELHCDK----LHVDPENFKLLGNVLVCVLAHHF-GK-EFTPQ
+VQ-AAYQKVVAG------V---ANALA----H-----K-----YH-----------
+
+In this example, the first line is parsed and the string ``Dog" is returned as the value for the factor variable. The application will then group all other instances of Dog sequences, and allow easy comparison with the other values present in the file. This example is shown in Figure \ref{fig:facetting}.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=\linewidth]{images/facetting}
+  \caption{Example of using our application to facet by a particular factor.}
+  \label{fig:facetting}
+\end{figure}
+
+### Modifying the Appearance
+Several properties of the plot can also be defined. The color of the amino acids can be defined according to either the polarity, or the water solubility, as previously discussed. The labels of the plot are also configurable. In the Advanced Configuration panel, options to modify the plot title, x axis title, and y axis title are available.
+
+### Saving the Result
+The resulting logo plot can be easily downloaded. A Download button appears on the left, which will save the plot as an image file on your computer. Within the Advanced Configuration panel, the image format can be selected as either png, jpg, or pdf. Finally, the DPI (dots per inch) of the image can be defined.
+
+# Examples
+
+## Re-design of Biovis
+Figure \ref{fig:1} shows the re-design of the logo sequence from Figure \ref{fig:original}.
+\hh{XXX needs a bit more}
+The ADK lid domain structure is universally conserved, but is stabilized in the Gram-negatives by a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29 (and several other residues in some organisms), while the Gram-positives are stabilized by a bound metal ion, tetrahedrally coordinated by four Cysteine residues at 4, 7, 24 and 27. A percentage of 11.6\% ($\pm 2.2$) Gram-positive bacteria stabilizes their ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
+The identities of several other positions (eg 5, 8, 30, 32) are differentially constrained in each subfamily as well, apparently due to steric requirements of the stabilizing residues.
+\begin{figure*}
+\begin{subfigure}[b]{\linewidth}
+\caption{Sequence logos showing the amino acid usage in the adenylate kinase lid (AKL) domain across all organisms.}\label{fig:1a} 
+
+```{r redesign, results='asis', echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4, message=FALSE}
+data(sequences)
+data(aacids)
+
+dm2 <- splitSequence(sequences, "peptide")
+cols <- c("grey80", brewer.pal(3,"RdYlBu"))
+
+dm3 <- calcInformation(dm2, pos="position", elems="element", k=21)
+dm3b <- merge(dm3, aacids, by.x="element", by.y="AA", all.x=T)
+ggplot(dm3b, aes(x=position, y=bits, group=element, label=element, fill=Polarity)) + geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + geom_logo(alpha=0.8) + scale_fill_manual("Polarity", values=cols) +  theme_bw() + theme(legend.position="bottom") + ylab("bits") + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
+```
+
+\end{subfigure}% 
+\hfill
+
+\begin{subfigure}[b]{\linewidth}
+\caption{Juxtaposition of amino acid usage in the adenylate kinase lid (AKL) domain of Gram-positive and Gram-negative bacteria \hfill}\label{fig:1b} 
+```{r redesign-byclass, results='asis', echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4.5}
+dm4 <- calcInformation(dm2, pos="position", elems="element", trt="class", k=21)
+dm5 <- merge(dm4, aacids, by.x="element", by.y="AA", all.x=T)
+dm4b <- as.data.frame(xtabs(freq ~class, data=dm4)/36)
+names(dm4b)[2] <- "width"
+dm5b <- merge(dm5, dm4b, by="class")
+dm5b$width <- 0.95*dm5b$width/max(dm5b$width)
+levels(dm5b$class) <- c("-", "+")
+
+ggplot(dm5b, aes(x=class, y=bits, group=element, label=element, fill= Polarity)) + geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + geom_logo(aes(width=width), alpha=0.8) + scale_fill_manual("Polarity", values=cols, guide=guide_legend(nrow=2)) + facet_wrap(~position, nrow=2) + theme_bw() + theme(legend.position="none") + xlab("") + ylab("bits")  + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
+```
+
+\end{subfigure} 
+\caption{ 
+\hh{XXX caption}
+}\label{fig:1}
+\end{figure*}
+
+\subsection{Viral Preservation}
+\hh{XXX need to include info on where the data comes from XXX}
+\hh{XXX the labelling of the sequences in the plot needs to be more directly - maybe a grey background for every other patient would help with the grouping - right now it is hard to tell the change in runs from the change in patients. XXX}
+
+\hh{Figure \ref{fig:hiv} shows a 
+logo plot of all sequences with at least one mismatch. Logos are aligned such, one panel is shown for each of the 34 positions of the sequence of interest. Within each position, a breakdown of bases is given for each of the two runs of  each patient. The plasmid run is shown on the very right. Here, we know that a pure sample was being sequenced - any deviations from the main sequence are sequencing errors introduced externally. Interestingly, errors in the plasmid sequencing seem to depend on the position. The amount of error in the plasmid sequence gives an idea of how much error might be introduced during sequencing in patients' sequences. }
+Both runs are very similar, reinforcing the presence of each mutation. A single exception is the mutation for patient 2\_ATG in position 15, which shows a strong mutation from G to T  in the second run that is curiously absent in the first run.
+
+\hh{XXX this might  be an example where it is informative to include the number of sequences in the visual display, because we aare focussing on only those sequences that do have at least one deviation from the common sequence. }
+
+\begin{figure*}[hbtp]
+```{r hiv-examples, echo=FALSE, fig.width=8, fig.height=9, out.width='\\textwidth', cache=TRUE}
+cols <- brewer.pal(10,"Paired")[c(1,2,7,8)]
+ 
+frm2 <- subset(frm, value < 50000)
+
+dm2 <- splitSequence(frm2, "X")
+dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
+dm4$element <- factor(dm4$element, levels = c("A", "T", "C", "G"))
+dm4$patientrun <- as.factor(with(dm4, paste(c(LETTERS[1:11], "plasmid")[as.numeric(variable)], run, sep=".")))
+dm4$poslabel <- paste("pos:", dm4$position, sep=" ")
+dm4$poslabel <- factor(dm4$poslabel)
+dm4$poslabel <- reorder(dm4$poslabel, as.numeric(gsub(" ","",dm4$position)), mean)
+dm4$patientrunID <- as.numeric(factor(dm4$patientrun))
+
+labels <- data.frame(
+  label=LETTERS[1:11], 
+  x = 2*(1:11)-0.5
+)
+
+rects <- data.frame(
+  xmin = 4*(1:6)-1.5, 
+  xmax =4*(1:6)+.5)
+  
+poslabels <- data.frame(expand.grid(
+  label=LETTERS[1:11],
+  poslabel=levels(dm4$poslabel)
+))
+
+labelsbypos <- merge(labels, poslabels, by="label")
+
+rectsbypos <- merge(rects, 
+                    data.frame(expand.grid(
+                      xmin = 4*(1:6)-1.5,
+                      poslabel=levels(dm4$poslabel)
+                    )),
+                    by="xmin")
+
+ggplot(data=dm4, aes(x=patientrunID, y=info, group=element, 
+                     label=element, fill=element)) + 
+  geom_rect(data=rectsbypos, ymin=-0.55, ymax=1.05, fill="grey80", alpha=0.5, 
+            aes(xmin=xmin, xmax=xmax), inherit.aes=FALSE) +
+  geom_text(data=labelsbypos, y=-0.5, size=2, vjust=0, colour="grey70", 
+            aes(x=x, label=label), inherit.aes=FALSE) +
+#  annotate("rect", ymin=-0.5, ymax=1, fill="grey90", 
+#           xmin=4*(1:6)-1.5, xmax =4*(1:6)+.5) +
+#  annotate("text", x=2*(1:11)-0.5, label=LETTERS[1:11], y=-0.5, size=2, 
+#           vjust=0, color="grey70") +
+  annotate("text", x=23.5,label= "plasmid", y=-0.5, colour="grey70", angle=90,
+            size=1.5,  hjust = 0, vjust=0.5) + 
+  geom_logo(alpha=0.8) + scale_fill_manual(values=cols) + 
+  facet_wrap(~poslabel, ncol=5) + theme_bw() + 
+  theme(axis.text.x=element_text(angle=-90, size=5,  hjust = 0, vjust=0.5), 
+        legend.position="none") + xlab("") + 
+  ylab("Frequency") +
+  theme(axis.text.x=element_blank(), axis.title.x=element_blank(), 
+        axis.ticks.x=element_blank()) +
+  theme(plot.margin=unit(c(0,0,0,0), unit="line")) +
+  scale_x_continuous(breaks=1:24, labels=levels(dm4$patientrun)) 
+```
+
+\caption{\label{fig:hiv}}
+\end{figure*}
+
+# Discussion and Conclusions
+
+\hh{XXX one problem with the logo plot in general are the negative numbers on the $y$-axis. below 0. Is there a way to make those numbers positive? Neither one of the information measures can be negative. }
+
+\nocite{*}
+\bibliography{references}
