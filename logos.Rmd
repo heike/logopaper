@@ -22,6 +22,7 @@ preamble: >
     \usepackage{float}
     \usepackage{subcaption}
 output: rticles::rjournal_article
+bibliography: references.bib
 ---
 
 \newcommand{\hh}[1]{{\color{magenta} #1}}
@@ -68,8 +69,10 @@ frm$variable <- factor(frm$variable, levels=ord$variable)
 \hh{
 Ok, so let's do a to-do list first:
 
-- We need a gentler intro to logo plots and a lit review of them, including the citations coming from the biovis re-design challenge \url{http://www.biovis.net/year/2013/info/redesign-contest}, and the reference to  seqLogo (bioconductor package by \citet{seqlogo})
+- We need a gentler intro to logo plots and a lit review of them, including the citations coming from the biovis re-design challenge \url{http://www.biovis.net/year/2013/info/redesign-contest}, and the reference to  seqLogo (bioconductor package by @seqlogo)
+
 - discussion of the cognitive challenges, and our solutions
+
 - some option of coloring by difference? (this could be based on a comparison of  multinomial distributions)
 }
 
@@ -77,7 +80,7 @@ Ok, so let's do a to-do list first:
 
 \hh{XXX In which areas are logo sequence plots used? }
 
-In a traditional logo sequence plot \citep{logo}, the position of an amino acid in the sequence is plotted on the horizontal axis, while on the vertical axis the amount of preserved information is shown. To measure preservation, Shannon information~\citep{shannon} is used. Shannon information  is an entropy measure given in bits, that describes the amount of mixture in each position. 
+In a traditional logo sequence plot [@logo], the position of an amino acid in the sequence is plotted on the horizontal axis, while on the vertical axis the amount of preserved information is shown. To measure preservation, Shannon information [@shannon] is used. Shannon information  is an entropy measure given in bits, that describes the amount of mixture in each position. 
 Formally, information $I$  in position $p$ is defined as
 \[
 I(p) = \log_2(21) + \sum_{aa} f_{aa} \log_2(f_{aa}),
@@ -106,27 +109,29 @@ The **color choice** for representing the letters of amino acids is related to w
 The plotting of **sequences of subfamilies** in separate logo plots does not facilitate a comparison of them. Researchers are in particular interested in differences in the conservation of amino acids between subfamilies.
 
 The **number of sequences** in each of the subfamilies is not shown directly. This influences  the inherent variability. It is therefore important to keep track of these numbers to be able to assess how and whether the size of each subfamily affects conservation.
-%
+
 ## Relevant Literature
+
 \hh{This needs to be worked into a paragraph:}
 
 (Online) tools for logo plot creation:
 \begin{itemize}
-\item RWebLogo R Code, wrapper for python code (BSD licence) \cite{rweblogo}
+\item RWebLogo R Code, wrapper for python code (BSD licence) [@rweblogo]
 \item WebLogo Python Code Python Code (BSD license, somewhat difficult to use)
-\item WebLogo 3.0 \cite{weblogo}
-\item Seq2Logo \cite{seq2logo} (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
-\item MoRAine (Online application with integrated binding site re-annotation) \cite{moraine}
+\item WebLogo 3.0 [@weblogo]
+\item Seq2Logo [@seq2logo] (Online app. for peptide alignments feat. pseudo count, sequence weighting and two-sided representation)
+\item MoRAine (Online application with integrated binding site re-annotation) [@moraine]
 \item GENIO (Online, \url{http://www.biogenio.com/logo/} - no other apparent reference)
 \item PWM-based logo (Online application for motif PWM-based models) - XXX can't find an appropriate reference
-\item LogoBar \cite{logobar} (Java application)
-\item CorreLogo \cite{correlogo} An online server for 3D sequence logos of RNA and DNA alignments
-\item seqLogo \cite{seqlogo} C function to generate DNA sequence logos (the reference is for the R package. I am not sure that there are C functions)
+\item LogoBar [@logobar] (Java application)
+\item CorreLogo [@correlogo] An online server for 3D sequence logos of RNA and DNA alignments
+\item seqLogo [@seqlogo] C function to generate DNA sequence logos (the reference is for the R package. I am not sure that there are C functions)
 \item MS-Word AddOn Ribbon that allows generation of consensus logos - can't find a reference besides to http://sourceforge.net/projects/bioword/?source=navbar
-\item RILogo program and web server \cite{rilogo} for creating logos for two interacting RNAs
-\item Skylign Online tool  \cite{skylign} for creating logos representing both sequence alignments and profile hidden Markov models
+\item RILogo program and web server [@rilogo] for creating logos for two interacting RNAs
+\item Skylign Online tool [@skylign] for creating logos representing both sequence alignments and profile hidden Markov models
 \end{itemize}
-\section{Aspects of the redesign}
+
+## Aspects of the redesign
 
 \hh{We will highlight aspects of the re-design using data made available as part of the BioVis 2013 re-design challenge (see  \url{http://www.biovis.net/year/2013/info/redesign-contest})}. The data consists of 1809 protein sequences of length 36 that are either Gram-negative (923 sequences) or  Gram-positive (886 sequences). Figure \ref{fig:1} shows logo plots featuring this data using the re-design discussed in this section.
 
@@ -143,22 +148,23 @@ The visually most dominant change to the display is the addition of boxes framin
 The height of boxes and letters is still given by the contribution of the amino acids to the total information. 
 The width of boxes is adjusted for the number of sequences in each subfamily, if appropriate. In Figure \ref{fig:1b} this difference is not immediately visible, as the class sizes are very similar, but in case of very different class sizes a rescaling of the width is extremely helpful.
 
-As information is strictly non-negative, we can make further use of the vertical axis by aligning the bottom of the box for the most frequently observed amino acid along the horizontal axis. This makes the box heights for the top sequence directly comparable.  It also aligns the boxes for the second most frequent amino acid, enabling comparisons of either one of the two highest contributions along a common scale \citep{cleveland:1984}. This reveals a previously unnoticed subgroup in the Gram-positive bacteria.  103 out of the 886 Gram-positive bacteria stabilize their  ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
-
+As information is strictly non-negative, we can make further use of the vertical axis by aligning the bottom of the box for the most frequently observed amino acid along the horizontal axis. This makes the box heights for the top sequence directly comparable.  It also aligns the boxes for the second most frequent amino acid, enabling comparisons of either one of the two highest contributions along a common scale [@cleveland:1984]. This reveals a previously unnoticed subgroup in the Gram-positive bacteria.  103 out of the 886 Gram-positive bacteria stabilize their  ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
 
 ## Color \& Shade
+
 Color hues are used to show two main properties of amino acids: polarity and electrical charging. Non-polar amino acids are shown in grey, polar amino acids are divided into positively charged (red), negatively charged (blue) and uncharged (yellow) amino acids. In contrast to the original plot a legend is included in the graphic. This makes it easier for the reader to identify possible interactions between polar residues at first view.
 
-
-
 ## Treatment of non-identified amino acids
+
 Another change to the original design is that non-identified amino acids (marked by a `.' in the  sequence) are kept, and shown in the visualization by a framed, but otherwise transparent box. The Shannon information calculated for the collective of non-identified amino acids should not be interpreted as actual information, as non-identified amino acids are not necessarily the same, but the fact, that amino acids are not identified in a position is valuable and should not be ignored. For example,  non-identified amino acids contribute the second largest contingent among the Gram-positive sequences in position 28, and might be an explanation of why these sequences are not conserved as well as  Gram-negative ones.
 
 ## Covariates in logos: Juxtaposition of subfamilies
+
 In order to facilitate comparisons across subfamilies, boxes of amino acids from different families are positioned side-by-side as shown in Figure \ref{fig:1b} to emphasize differences between Gram-positive and Gram-negative sequences. In a further step (not shown) this can be used to show sub-classes or clusters of sequences within a subfamily, which would represent a logical next step of an analysis and allow for an evaluation of how often and in which positions amino acids deviate from the main sequence structure. 
 
 # Our Implementation
-Our implementation consists of two parts: the R package \textbf{gglogo}, which provides an implementation of plots within the popular ggplot2 framework using the previously mentioned design principles. The second part provides a web-interface that allows access to \textbf{gglogo} without requiring programming knowledge by the user.
+
+Our implementation consists of two parts: the R package **gglogo**, which provides an implementation of plots within the popular ggplot2 framework using the previously mentioned design principles. The second part provides a web-interface that allows access to **gglogo** without requiring programming knowledge by the user.
 
 ## gglogo
 
@@ -166,7 +172,7 @@ Our implementation consists of two parts: the R package \textbf{gglogo}, which p
 
 ## Web Interface
 
-Our re-design is implemented as a Shiny-based web application \cite{shiny}, using the R statistical software \cite{R}. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot is displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left. A screenshot of the overall application is displayed in Figure \ref{fig:interface}.
+Our re-design is implemented as a Shiny-based web application [@shiny], using the R statistical software [@R]. It is available at the URL \url{http://erichare.shinyapps.io/gglogo}. The software allows users to input sequencing data in the FASTA format, or upload a FASTA file. The resulting logo plot is displayed on the right, with a slider to adjust the visible region of the plot. A button for downloading the plot as a file is displayed on the left. A screenshot of the overall application is displayed in Figure \ref{fig:interface}.
 
 \begin{figure*}
   \centering
@@ -179,7 +185,8 @@ Our re-design is implemented as a Shiny-based web application \cite{shiny}, usin
 Several advanced options are available after clicking ``Show Advanced Configuration":
 
 ### Facetting
-We often wish to compare the frequency of amino acids in each position at different levels of some factor, or grouping variable. For instance, if an experiment contained two replications, we can observe the consistency across replications by comparing each replication side by side for each position in the sequence. Side-by-side alignments allow for more effective comparisons. In particular, judging the relative height of two bars is done significantly better when they are positioned next to one another \cite{cleveland:1984}. Our implementation provides a way to \textbf{facet} by some variable, so that these comparisons can be more easily made in a logo plot.
+
+We often wish to compare the frequency of amino acids in each position at different levels of some factor, or grouping variable. For instance, if an experiment contained two replications, we can observe the consistency across replications by comparing each replication side by side for each position in the sequence. Side-by-side alignments allow for more effective comparisons. In particular, judging the relative height of two bars is done significantly better when they are positioned next to one another [@cleveland:1984]. Our implementation provides a way to **facet** by some variable, so that these comparisons can be more easily made in a logo plot.
 
 In the FASTA file encoding, a line of metadata beginning with the `$>$` symbol precedes each sequence. Our application will automatically parse the first piece of metadata up to the first space encountered on this line, and treat it as a factor for which one can facet by. For instance, an example of FASTA encoding might be the following:
 
@@ -199,14 +206,17 @@ In this example, the first line is parsed and the string ``Dog" is returned as t
 \end{figure}
 
 ### Modifying the Appearance
+
 Several properties of the plot can also be defined. The color of the amino acids can be defined according to either the polarity, or the water solubility, as previously discussed. The labels of the plot are also configurable. In the Advanced Configuration panel, options to modify the plot title, x axis title, and y axis title are available.
 
 ### Saving the Result
+
 The resulting logo plot can be easily downloaded. A Download button appears on the left, which will save the plot as an image file on your computer. Within the Advanced Configuration panel, the image format can be selected as either png, jpg, or pdf. Finally, the DPI (dots per inch) of the image can be defined.
 
 # Examples
 
 ## Re-design of Biovis
+
 Figure \ref{fig:1} shows the re-design of the logo sequence from Figure \ref{fig:original}.
 \hh{XXX needs a bit more}
 The ADK lid domain structure is universally conserved, but is stabilized in the Gram-negatives by a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29 (and several other residues in some organisms), while the Gram-positives are stabilized by a bound metal ion, tetrahedrally coordinated by four Cysteine residues at 4, 7, 24 and 27. A percentage of 11.6\% ($\pm 2.2$) Gram-positive bacteria stabilizes their ADK lid domain in the same way as Gram-negative bacteria using a hydrogen bonding network between residues 4, 7, 9, 24, 27, and 29.
@@ -250,15 +260,14 @@ ggplot(dm5b, aes(x=class, y=bits, group=element, label=element, fill= Polarity))
 }\label{fig:1}
 \end{figure*}
 
-\subsection{Viral Preservation}
+## Viral Preservation
+
 \hh{XXX need to include info on where the data comes from XXX}
 \hh{XXX the labelling of the sequences in the plot needs to be more directly - maybe a grey background for every other patient would help with the grouping - right now it is hard to tell the change in runs from the change in patients. XXX}
 
-\hh{Figure \ref{fig:hiv} shows a 
-logo plot of all sequences with at least one mismatch. Logos are aligned such, one panel is shown for each of the 34 positions of the sequence of interest. Within each position, a breakdown of bases is given for each of the two runs of  each patient. The plasmid run is shown on the very right. Here, we know that a pure sample was being sequenced - any deviations from the main sequence are sequencing errors introduced externally. Interestingly, errors in the plasmid sequencing seem to depend on the position. The amount of error in the plasmid sequence gives an idea of how much error might be introduced during sequencing in patients' sequences. }
-Both runs are very similar, reinforcing the presence of each mutation. A single exception is the mutation for patient 2\_ATG in position 15, which shows a strong mutation from G to T  in the second run that is curiously absent in the first run.
+\hh{Figure \ref{fig:hiv} shows a logo plot of all sequences with at least one mismatch. Logos are aligned such, one panel is shown for each of the 34 positions of the sequence of interest. Within each position, a breakdown of bases is given for each of the two runs of  each patient. The plasmid run is shown on the very right. Here, we know that a pure sample was being sequenced - any deviations from the main sequence are sequencing errors introduced externally. Interestingly, errors in the plasmid sequencing seem to depend on the position. The amount of error in the plasmid sequence gives an idea of how much error might be introduced during sequencing in patients' sequences. Both runs are very similar, reinforcing the presence of each mutation. A single exception is the mutation for patient 2\_ATG in position 15, which shows a strong mutation from G to T  in the second run that is curiously absent in the first run.
 
-\hh{XXX this might  be an example where it is informative to include the number of sequences in the visual display, because we aare focussing on only those sequences that do have at least one deviation from the common sequence. }
+\hh{XXX this might be an example where it is informative to include the number of sequences in the visual display, because we aare focussing on only those sequences that do have at least one deviation from the common sequence.}
 
 \begin{figure*}[hbtp]
 ```{r hiv-examples, echo=FALSE, fig.width=8, fig.height=9, out.width='\\textwidth', cache=TRUE}
@@ -320,7 +329,6 @@ ggplot(data=dm4, aes(x=patientrunID, y=info, group=element,
   theme(plot.margin=unit(c(0,0,0,0), unit="line")) +
   scale_x_continuous(breaks=1:24, labels=levels(dm4$patientrun)) 
 ```
-
 \caption{\label{fig:hiv}}
 \end{figure*}
 
@@ -328,5 +336,4 @@ ggplot(data=dm4, aes(x=patientrunID, y=info, group=element,
 
 \hh{XXX one problem with the logo plot in general are the negative numbers on the $y$-axis. below 0. Is there a way to make those numbers positive? Neither one of the information measures can be negative. }
 
-\nocite{*}
-\bibliography{references}
+# Bibliography
