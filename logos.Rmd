@@ -227,14 +227,12 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 
 ```{r redesign, results='asis', echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4, message=FALSE}
 data(sequences)
-data(aacids)
-
-dm2 <- splitSequence(sequences, "peptide")
 cols <- c("grey80", brewer.pal(3,"RdYlBu"))
 
-dm3 <- calcInformation(dm2, pos="position", elems="element", k=21)
-dm3b <- merge(dm3, aacids, by.x="element", by.y="AA", all.x=T)
-ggplot(dm3b, aes(x=position, y=bits, group=element, label=element, fill=Polarity)) + geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + geom_logo(alpha=0.8) + scale_fill_manual("Polarity", values=cols) +  theme_bw() + theme(legend.position="bottom") + ylab("bits") + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
+ggplot(data = ggfortify(sequences, seq="peptide"),
+       aes(x=position, y=bits, group=element, label=element, fill=Polarity)) + 
+  geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) +
+  geom_logo(alpha=0.8) + scale_fill_manual("Polarity", values=cols) +  theme_bw() + theme(legend.position="bottom") + ylab("bits") + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
 ```
 
 \end{subfigure}% 
@@ -243,15 +241,15 @@ ggplot(dm3b, aes(x=position, y=bits, group=element, label=element, fill=Polarity
 \begin{subfigure}[b]{\linewidth}
 \caption{Juxtaposition of amino acid usage in the adenylate kinase lid (AKL) domain of Gram-positive and Gram-negative bacteria \hfill}\label{fig:1b} 
 ```{r redesign-byclass, results='asis', echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4.5}
-dm4 <- calcInformation(dm2, pos="position", elems="element", trt="class", k=21)
-dm5 <- merge(dm4, aacids, by.x="element", by.y="AA", all.x=T)
-dm4b <- as.data.frame(xtabs(freq ~class, data=dm4)/36)
-names(dm4b)[2] <- "width"
-dm5b <- merge(dm5, dm4b, by="class")
-dm5b$width <- 0.95*dm5b$width/max(dm5b$width)
-levels(dm5b$class) <- c("-", "+")
+levels(sequences$class) <- c("-", "+")
 
-ggplot(dm5b, aes(x=class, y=bits, group=element, label=element, fill= Polarity)) + geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + geom_logo(aes(width=width), alpha=0.8) + scale_fill_manual("Polarity", values=cols, guide=guide_legend(nrow=2)) + facet_wrap(~position, nrow=2) + theme_bw() + theme(legend.position="none") + xlab("") + ylab("bits")  + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
+cols <- c("grey80", brewer.pal(3,"RdYlBu"))
+
+ggplot(data = ggfortify(sequences, seq="peptide", treatment="class"), 
+         aes(x=class, y=bits, group=element, label=element, fill= Polarity)) +
+  geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + #geom_logo(aes(width=width), alpha=0.8) + 
+    geom_logo(alpha=0.8) + 
+    scale_fill_manual("Polarity", values=cols, guide=guide_legend(nrow=2)) + facet_wrap(~position, nrow=2) + theme_bw() + theme(legend.position="none") + xlab("") + ylab("bits")  + theme(plot.margin=unit(c(0,0,0,0), "cm")) + geom_hline(yintercept=0, colour="white", size=0.5) + geom_hline(yintercept=0, colour="grey30", size=0.125) + scale_y_continuous(breaks=c(-1,0,1,2,4), labels=c(1,0,1,2,4))
 ```
 
 \end{subfigure} 
@@ -275,14 +273,17 @@ cols <- brewer.pal(10,"Paired")[c(1,2,7,8)]
  
 frm2 <- subset(frm, value < 50000)
 
-dm2 <- splitSequence(frm2, "X")
-dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
+# dm2 <- splitSequence(frm2, "X")
+# dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
+
+dm4 <- ggfortify(frm2, seq="X", treatment = c("variable", "run"), weight = "value", method="frequency")
 dm4$element <- factor(dm4$element, levels = c("A", "T", "C", "G"))
 dm4$patientrun <- as.factor(with(dm4, paste(c(LETTERS[1:11], "plasmid")[as.numeric(variable)], run, sep=".")))
 dm4$poslabel <- paste("pos:", dm4$position, sep=" ")
 dm4$poslabel <- factor(dm4$poslabel)
 dm4$poslabel <- reorder(dm4$poslabel, as.numeric(gsub(" ","",dm4$position)), mean)
 dm4$patientrunID <- as.numeric(factor(dm4$patientrun))
+
 
 labels <- data.frame(
   label=LETTERS[1:11], 
