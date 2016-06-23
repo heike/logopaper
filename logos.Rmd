@@ -227,7 +227,7 @@ The identities of several other positions (eg 5, 8, 30, 32) are differentially c
 \begin{subfigure}[b]{\linewidth}
 \caption{Sequence logos showing the amino acid usage in the adenylate kinase lid (AKL) domain across all organisms.}\label{fig:1a} 
 
-```{r redesign, results='asis', echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4, message=FALSE}
+```{r redesign, results='asis', echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4, message=FALSE, warning=FALSE}
 data(sequences)
 cols <- c("grey80", brewer.pal(3,"RdYlBu"))
 
@@ -242,7 +242,7 @@ ggplot(data = ggfortify(sequences, seq="peptide"),
 
 \begin{subfigure}[b]{\linewidth}
 \caption{Juxtaposition of amino acid usage in the adenylate kinase lid (AKL) domain of Gram-positive and Gram-negative bacteria \hfill}\label{fig:1b} 
-```{r redesign-byclass, results='asis', echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4.5}
+```{r redesign-byclass, results='asis', echo=FALSE, out.width='\\textwidth', fig.width=9, fig.height=4.5, warning=FALSE}
 levels(sequences$class) <- c("-", "+")
 
 cols <- c("grey80", brewer.pal(3,"RdYlBu"))
@@ -267,10 +267,10 @@ ggplot(data = ggfortify(sequences, seq="peptide", treatment="class"),
 
 \hh{Figure \ref{fig:hiv} shows a logo plot of all sequences with at least one mismatch. Logos are aligned such, one panel is shown for each of the 34 positions of the sequence of interest. Within each position, a breakdown of bases is given for each of the two runs of  each patient. The plasmid run is shown on the very right. Here, we know that a pure sample was being sequenced - any deviations from the main sequence are sequencing errors introduced externally. Interestingly, errors in the plasmid sequencing seem to depend on the position. The amount of error in the plasmid sequence gives an idea of how much error might be introduced during sequencing in patients' sequences. Both runs are very similar, reinforcing the presence of each mutation. A single exception is the mutation for patient 2\_ATG in position 15, which shows a strong mutation from G to T  in the second run that is curiously absent in the first run.
 
-\hh{XXX this might be an example where it is informative to include the number of sequences in the visual display, because we aare focussing on only those sequences that do have at least one deviation from the common sequence.}
+\hh{XXX this might be an example where it is informative to include the number of sequences in the visual display, because we are focussing on only those sequences that do have at least one deviation from the common sequence.}
 
 \begin{figure*}[hbtp]
-```{r hiv-examples, echo=FALSE, fig.width=8, fig.height=9, out.width='\\textwidth', cache=TRUE}
+```{r hiv-examples, echo=FALSE, fig.width=8, fig.height=9, out.width='\\textwidth', cache=TRUE, warning=FALSE}
 cols <- brewer.pal(10,"Paired")[c(1,2,7,8)]
  
 frm2 <- subset(frm, value < 50000)
@@ -339,14 +339,55 @@ ggplot(data=dm4, aes(x=patientrunID, y=info, group=element,
 
 ```{r, fig.caption="Default alphabet available in the package"}
 data(alphabet)
-qplot(x, y, data = alphabet,  geom="path", group=pathGroup) + 
-  facet_wrap(facets =~group, ncol = 7) + coord_equal() +
+qplot(x, y, data = alphabet,  geom="polygon") + 
+  facet_wrap(facets =~group, ncol = 13) + coord_equal() +
   theme(plot.margin = grid::unit(c(0,0,0,0), unit="cm"))
 ```
 
+The `extrafont` package [@extrafont] gives an overview of available fonts (use `fonts`) and 
+also helps with installing additional fonts.
 
-help with installed fonts: extrafont, extrafontdb
-load_font, fonts()
+```{r}
+extrafont::fonts()
+```
+
+```{r}
+alphas <- c(LETTERS, letters, 0:9, "*")
+alpha_comic <- createPolygons(letters=alphas,
+                              font="Comic Sans MS", scale=TRUE)
+alpha_comic$group <- factor(alpha_comic$group, levels=alphas)
+qplot(x, y, data = alpha_comic,  geom="polygon") + 
+  facet_wrap(facets =~group, ncol = 13) + coord_equal() +
+  theme(plot.margin = grid::unit(c(0,0,0,0), unit="cm"))
+```
+
+If we want to change the alphabet used in `geom_logo`, we use this data set in the `alphabet` parameter.
+```{r}
+alphabet <- alpha_comic
+
+ggplot(data=dm4, aes(x=patientrunID, y=info, group=element, 
+                     label=element, fill=element)) + 
+  geom_rect(data=rectsbypos, ymin=-0.55, ymax=1.05, fill="grey80", alpha=0.5, 
+            aes(xmin=xmin, xmax=xmax), inherit.aes=FALSE) +
+  geom_text(data=labelsbypos, y=-0.5, size=2, vjust=0, colour="grey70", 
+            aes(x=x, label=label), inherit.aes=FALSE) +
+#  annotate("rect", ymin=-0.5, ymax=1, fill="grey90", 
+#           xmin=4*(1:6)-1.5, xmax =4*(1:6)+.5) +
+#  annotate("text", x=2*(1:11)-0.5, label=LETTERS[1:11], y=-0.5, size=2, 
+#           vjust=0, color="grey70") +
+  annotate("text", x=23.5,label= "plasmid", y=-0.5, colour="grey70", angle=90,
+            size=1.5,  hjust = 0, vjust=0.5) + 
+  geom_logo(alpha=0.8, alphabet=alpha_comic) + 
+  scale_fill_manual(values=cols) + 
+  facet_wrap(~poslabel, ncol=5) + theme_bw() + 
+  theme(axis.text.x=element_text(angle=-90, size=5,  hjust = 0, vjust=0.5), 
+        legend.position="none") + xlab("") + 
+  ylab("Frequency") +
+  theme(axis.text.x=element_blank(), axis.title.x=element_blank(), 
+        axis.ticks.x=element_blank()) +
+  theme(plot.margin=unit(c(0,0,0,0), unit="line")) +
+  scale_x_continuous(breaks=1:24, labels=levels(dm4$patientrun)) 
+```
 
 alternative to writing text gdtools
 
