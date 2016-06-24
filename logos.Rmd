@@ -335,6 +335,32 @@ ggplot(data=dm4, aes(x=patientrunID, y=info, group=element,
 \caption{\label{fig:hiv}}
 \end{figure*}
 
+# Different positions
+
+How letters are stacked is determined by different positions. By default, position is set to `"logo"`, to ensure that the largest element at each position is in the most prominent position and aligned along the x axis. Smaller contributions are arranged below and stacked underneath each other in descending size.  
+
+In comparison to that, letters in the classic logo plot are stacked in descending order on top of each other. This positioning can be achieved using `position="classic"`.
+
+```{r, echo=FALSE, fig.width=8, fig.height=9, out.width='\\textwidth', cache=TRUE, warning=FALSE}
+ggplot(data=dm4, aes(x=patientrunID, y=info, group=element, 
+                     label=element, fill=element)) + 
+  geom_rect(data=rectsbypos, ymin=-0.55, ymax=1.05, fill="grey80", alpha=0.5, 
+            aes(xmin=xmin, xmax=xmax), inherit.aes=FALSE) +
+  geom_text(data=labelsbypos, y=-0.5, size=2, vjust=0, colour="grey70", 
+            aes(x=x, label=label), inherit.aes=FALSE) +
+  annotate("text", x=23.5,label= "plasmid", y=-0.5, colour="grey70", angle=90,
+            size=1.5,  hjust = 0, vjust=0.5) + 
+  geom_logo(alpha=0.8, position="classic") + 
+  scale_fill_manual(values=cols) + 
+  facet_wrap(~poslabel, ncol=5) + theme_bw() + 
+  theme(axis.text.x=element_text(angle=-90, size=5,  hjust = 0, vjust=0.5), 
+        legend.position="none") + xlab("") + 
+  ylab("Frequency") +
+  theme(axis.text.x=element_blank(), axis.title.x=element_blank(), 
+        axis.ticks.x=element_blank()) +
+  theme(plot.margin=unit(c(0,0,0,0), unit="line")) 
+```
+
 # Changing the alphabet used
 
 ```{r, fig.caption="Default alphabet available in the package"}
@@ -348,10 +374,10 @@ The `extrafont` package [@extrafont] gives an overview of available fonts (use `
 also helps with installing additional fonts.
 
 ```{r}
-extrafont::fonts()
+head(extrafont::fonts())
 ```
 
-```{r}
+```{r, 'comic', cache=TRUE}
 alphas <- c(LETTERS, letters, 0:9, "*")
 alpha_comic <- createPolygons(letters=alphas,
                               font="Comic Sans MS", scale=TRUE)
@@ -362,8 +388,7 @@ qplot(x, y, data = alpha_comic,  geom="polygon") +
 ```
 
 If we want to change the alphabet used in `geom_logo`, we use this data set in the `alphabet` parameter.
-```{r}
-alphabet <- alpha_comic
+```{r, dependson='comic'}
 
 ggplot(data=dm4, aes(x=patientrunID, y=info, group=element, 
                      label=element, fill=element)) + 
@@ -371,10 +396,6 @@ ggplot(data=dm4, aes(x=patientrunID, y=info, group=element,
             aes(xmin=xmin, xmax=xmax), inherit.aes=FALSE) +
   geom_text(data=labelsbypos, y=-0.5, size=2, vjust=0, colour="grey70", 
             aes(x=x, label=label), inherit.aes=FALSE) +
-#  annotate("rect", ymin=-0.5, ymax=1, fill="grey90", 
-#           xmin=4*(1:6)-1.5, xmax =4*(1:6)+.5) +
-#  annotate("text", x=2*(1:11)-0.5, label=LETTERS[1:11], y=-0.5, size=2, 
-#           vjust=0, color="grey70") +
   annotate("text", x=23.5,label= "plasmid", y=-0.5, colour="grey70", angle=90,
             size=1.5,  hjust = 0, vjust=0.5) + 
   geom_logo(alpha=0.8, alphabet=alpha_comic) + 
@@ -444,6 +465,6 @@ get apple braille to work? that would be pretty interesting.
 
 # Discussion and Conclusions
 
-\hh{XXX one problem with the logo plot in general are the negative numbers on the $y$-axis. below 0. Is there a way to make those numbers positive? Neither one of the information measures can be negative. }
+\hh{XXX one problem with the logo plot in general are the negative numbers on the $y$-axis. below 0. Is there a way to make those numbers positive? Neither one of the information measures can be negative. XXX fixed}
 
 # Bibliography
