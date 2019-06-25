@@ -18,15 +18,13 @@ author:
     address:
     email: helga.hofmann-sieber@hpi.uni-hamburg.de
 abstract: >
-preamble: >
-    \usepackage{float}
-    \usepackage{subcaption}
-output: rticles::rjournal_article
+output:
+  #rticles::rjournal_article:
+  pdf_document:
+    includes:
+      in_header: preamble.tex
 bibliography: references.bib
 ---
-
-\newcommand{\hh}[1]{{\color{magenta} #1}}
-\newcommand{\eh}[1]{{\color{red} #1}}
 
 # Introduction
 
