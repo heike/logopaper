@@ -4,7 +4,8 @@
 
 *.Rproj
 
-*.tex
+RJwrapper.tex
+logos.tex
 
 *.bbl
 
