@@ -1,5 +1,5 @@
 ---
-title: Online logo plots
+title: gglogo - logo plots in ggplot2 and online
 author:
   - name: Eric Hare
     affiliation: Iowa State University
