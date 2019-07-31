@@ -245,7 +245,7 @@ levels(sequences$class) <- c("-", "+")
 
 cols <- c("grey80", brewer.pal(3,"RdYlBu"))
 
-ggplot(data = ggfortify(sequences, peptide, treatment="class"), 
+ggplot(data = ggfortify(sequences, peptide, treatment = class), 
          aes(x=class, y=bits, group=element, label=element, fill= Polarity)) +
   geom_hline(yintercept=-log(1/21, base=2), colour="grey30", size=0.5) + #geom_logo(aes(width=width), alpha=0.8) + 
     geom_logo(alpha=0.8) + 
@@ -271,14 +271,17 @@ ggplot(data = ggfortify(sequences, peptide, treatment="class"),
 ```{r hiv-examples, echo=FALSE, fig.width=8, fig.height=9, out.width='\\textwidth', cache=TRUE, warning=FALSE}
 cols <- brewer.pal(10,"Paired")[c(1,2,7,8)]
  
-frm2 <- subset(frm, value < 50000)
+frm2 <- filter(frm, value < 50000) %>%
+  mutate(trt = interaction(variable, run))
 
 # dm2 <- splitSequence(frm2, "X")
 # dm4 <- calcInformation(dm2, pos="position", elems="element", trt=c("variable", "run"), k=4, weight="value", method="frequency")
 
-dm4 <- ggfortify(frm2, X, treatment = c("variable", "run"), weight = "value", method="frequency")
+dm4 <- ggfortify(frm2, X, treatment = trt, weight = value, method = "frequency") %>%
+  mutate(variable = sapply(strsplit(as.character(trt), "\\."), `[`, 1),
+         run = sapply(strsplit(as.character(trt), "\\."), `[`, 2))
 dm4$element <- factor(dm4$element, levels = c("A", "T", "C", "G"))
-dm4$patientrun <- as.factor(with(dm4, paste(c(LETTERS[1:11], "plasmid")[as.numeric(variable)], run, sep=".")))
+dm4$patientrun <- as.factor(with(dm4, paste(c(LETTERS[1:11], "plasmid")[as.numeric(factor(variable))], run, sep = ".")))
 dm4$poslabel <- paste("pos:", dm4$position, sep=" ")
 dm4$poslabel <- factor(dm4$poslabel)
 dm4$poslabel <- reorder(dm4$poslabel, as.numeric(gsub(" ","",dm4$position)), mean)
@@ -375,7 +378,7 @@ also helps with installing additional fonts.
 head(extrafont::fonts())
 ```
 
-```{r, 'comic', cache=TRUE}
+```{r comic, cache=TRUE}
 alphas <- c(LETTERS, letters, 0:9, "*")
 alpha_comic <- createPolygons(letters=alphas,
                               font="Comic Sans MS", scale=TRUE)
